@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Ceyhun xGPT Tools v3 – Dropshipping Suite</title>
+    <title>Ceyhun xGPT Tools v3.1 – Dropshipping Suite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         :root {
@@ -458,7 +458,7 @@
 
         ul.compact li { margin-bottom: 3px; }
 
-        /* PRINT (PDF) – sadece Mini AI paneli */
+        /* PRINT */
         @media print {
             body, html {
                 margin: 0;
@@ -516,15 +516,15 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="brand-box">
-            <div class="brand-title">Ceyhun xGPT • v3</div>
-            <div class="brand-sub">Black & Gold Dropshipping Suite • GitHub Pages</div>
+            <div class="brand-title">Ceyhun xGPT • v3.1</div>
+            <div class="brand-sub">Black & Gold Dropshipping Suite • Title Scraper Lite</div>
         </div>
 
         <div class="nav-label">Paneller</div>
         <button class="nav-btn" data-target="panel-mini-ai">
             <span class="icon">🔗</span>
             Mini AI Link Analiz
-            <span class="nav-pill">V3</span>
+            <span class="nav-pill">V3.1</span>
         </button>
         <button class="nav-btn" data-target="panel-drop">
             <span class="icon">📦</span>
@@ -567,8 +567,8 @@
         </button>
 
         <div class="sidebar-footer">
-            Local Mini AI aktif.  
-            İleride OpenAI API key ekleyerek “gerçek ChatGPT” moduna alınabilir.
+            Local Mini AI + Title Scraper Lite aktif.<br>
+            İleride OpenAI API key ile “gerçek ChatGPT” moduna alınabilir.
         </div>
     </aside>
 
@@ -576,8 +576,8 @@
     <main class="main">
         <div class="topbar">
             <div class="top-left">
-                <div class="top-title">Ceyhun xGPT Tools v3</div>
-                <div class="top-sub">eBay dropshipping için ücretsiz, yerel Mini AI destekli analiz paneli.</div>
+                <div class="top-title">Ceyhun xGPT Tools v3.1</div>
+                <div class="top-sub">eBay dropshipping için ücretsiz, yerel Mini AI + Title Scraper Lite destekli analiz paneli.</div>
             </div>
             <div class="top-tags">
                 <div class="chip gold">Black & Gold UI</div>
@@ -593,16 +593,19 @@
                     <div class="card">
                         <div class="card-header">
                             <div>
-                                <div class="card-title">🔗 Mini AI Link Analiz v3</div>
-                                <div class="card-sub">Sadece eBay linkini gir → ürün özeti, fiyat & kâr, trend & rekabet, tedarikçi önerisi al.</div>
+                                <div class="card-title">🔗 Mini AI Link Analiz v3.1</div>
+                                <div class="card-sub">
+                                    Sadece eBay linki gir → önce Title Scraper Lite ile gerçek başlığı yakalamaya çalışır,
+                                    sonra Mini AI ile ürün + fiyat + trend + rekabet analizi üretir.
+                                </div>
                             </div>
-                            <span class="badge-soft gold">Ücretsiz Mini AI</span>
+                            <span class="badge-soft gold">Title Scraper Lite</span>
                         </div>
 
                         <label>eBay Ürün Linki</label>
                         <input id="mini-link" placeholder="https://www.ebay.co.uk/itm/...">
                         <div class="small-note">
-                            Not: Bu sistem gerçek scraping yapmaz; URL’den ürün tipini okuyup tahmini analiz üretir. Tamamen local ve ücretsizdir.
+                            Not: Tarayıcı izin verirse sayfa başlığını çeker, izin vermezse (CORS engeli) URL slug üzerinden tahmin yapar.
                         </div>
 
                         <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
@@ -639,14 +642,14 @@
                             <div class="card-header">
                                 <div>
                                     <div class="card-title">🟩 Ürün Özeti</div>
-                                    <div class="card-sub">URL slug üzerinden çözümlenen temel bilgiler.</div>
+                                    <div class="card-sub">Title Scraper Lite + URL slug üzerinden çözümlenen temel bilgiler.</div>
                                 </div>
                             </div>
                             <div class="mini-thumb" id="mini-thumb">
-                                Ürün görsel önizlemesi (temsili)  
-                                <div style="font-size:10px;margin-top:2px;">
-                                    Tam scraping için ayrı backend gerekir; bu sürümde Mini AI sadece başlık/slug üzerinden yorum yapar.
-                                </div>
+                                Ürün görseli (temsili blok).<br>
+                                <span style="font-size:10px;color:#9ca3af;">
+                                    Gerçek başlık: Title Scraper Lite tarayıcı izin verirse sayfa başlığından çekmeye çalışır.
+                                </span>
                             </div>
                             <div class="analysis-box" style="margin-top:8px;">
                                 <div class="analysis-header">Başlık & Niş</div>
@@ -714,7 +717,7 @@
                             <div class="card-header">
                                 <div>
                                     <div class="card-title">🌐 Tedarikçi Önerisi (Mini AI)</div>
-                                    <div class="card-sub">CJ, Avasam, AliExpress ve Temu için hangi kelimelerle arama yapılabilir?</div>
+                                    <div class="card-sub">CJ, Avasam, AliExpress ve Temu için arama kelime/kategori önerileri.</div>
                                 </div>
                             </div>
                             <div id="mini-supplier"></div>
@@ -731,7 +734,7 @@
                             <div class="card-title">📦 Drop Analyzer (Manuel)</div>
                             <div class="card-sub">Alış + satış + ürün başlığına göre klasik kâr ve skor analizi.</div>
                         </div>
-                        <span class="badge-soft green">Manuel Mod</span>
+                        <span class="badge-soft.green">Manuel Mod</span>
                     </div>
 
                     <label>Ürün Başlığı</label>
@@ -771,7 +774,7 @@
                     <div class="card-header">
                         <div>
                             <div class="card-title">🛒 Product Finder</div>
-                            <div class="card-sub">Anahtar kelimeye göre mantıklı ürün fikirleri (set, bundle, kit) üretir.</div>
+                            <div class="card-sub">Anahtar kelimeye göre set / bundle / kit fikirleri üretir.</div>
                         </div>
                     </div>
 
@@ -964,8 +967,67 @@
         });
     });
 
-    // MINI AI LINK ANALIZ V3
-    function runMiniAI() {
+    // --- TITLE SCRAPER LITE ---
+
+    async function tryFetchTitle(url) {
+        try {
+            const resp = await fetch(url, { mode: "cors" });
+            const text = await resp.text();
+            const match = text.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+            if (match && match[1]) {
+                let t = match[1];
+                t = t.replace(/(\r\n|\n|\t)/g, " ").trim();
+                t = t.replace(/ebay[^-]*- /i, "");
+                return t;
+            }
+        } catch (e) {
+            // CORS veya network hatası: sessizce geç, slug fallback kullanılacak
+        }
+        return "";
+    }
+
+    function buildSupplierHints(words, category, basePrice) {
+        const coreKeyword = (words[0] || "product").toLowerCase();
+        const aliexpressRangeLow = (basePrice * 0.3).toFixed(2);
+        const aliexpressRangeHigh = (basePrice * 0.55).toFixed(2);
+
+        let cjKey = coreKeyword;
+        if (category === "Home & Kitchen") cjKey = coreKeyword + " organizer";
+        if (category === "Pet Supplies") cjKey = coreKeyword + " pet";
+        if (category === "Car Accessories") cjKey = coreKeyword + " car";
+        if (category === "Mobile Accessories") cjKey = coreKeyword + " phone";
+
+        let avasamCat = "General Home";
+        if (category === "Home & Kitchen") avasamCat = "Home & Garden";
+        if (category === "Pet Supplies") avasamCat = "Pet Supplies";
+        if (category === "Car Accessories") avasamCat = "Automotive";
+        if (category === "Mobile Accessories") avasamCat = "Consumer Electronics";
+
+        return `
+            <div class="analysis-box">
+                <div class="analysis-header">Tedarikçi Arama Önerileri</div>
+                <strong>CJ Dropshipping:</strong><br>
+                • Arama çubuğuna: <code>${cjKey}</code><br>
+                • Filtre: UK Warehouse + NET invoice (mümkünse)<br><br>
+
+                <strong>Avasam:</strong><br>
+                • Kategori: <code>${avasamCat}</code><br>
+                • Fiyat bandı: £${(basePrice * 0.4).toFixed(2)} – £${(basePrice * 0.7).toFixed(2)}<br><br>
+
+                <strong>AliExpress:</strong><br>
+                • Arama: <code>${coreKeyword}</code><br>
+                • Fiyat beklentisi: ~£${aliexpressRangeLow} – £${aliexpressRangeHigh}<br><br>
+
+                <strong>Temu / Diğer:</strong><br>
+                • Aynı kelime + “set / bundle” ekleyerek benzer ürünleri bulabilirsin.<br><br>
+
+                Not: Bunlar Mini AI tahminleridir. Gerçek tedarikçiyi seçerken; değerlendirme puanı, yorumlar, iade politikası ve kargo süresi mutlaka kontrol edilmeli.
+            </div>
+        `;
+    }
+
+    // MINI AI LINK ANALIZ V3.1 (async)
+    async function runMiniAI() {
         const input = (document.getElementById('mini-link').value || "").trim();
         if (!input) {
             alert("Kanka, önce eBay linkini yapıştıralım :)");
@@ -974,10 +1036,13 @@
 
         let host = "";
         let path = "";
+        let normalizedUrl = input;
+
         try {
             const u = new URL(input);
             host = u.hostname || "";
             path = u.pathname || "";
+            normalizedUrl = u.href;
         } catch (e) {
             const parts = input.split("/");
             host = parts[2] || "";
@@ -989,19 +1054,33 @@
         else if (host.includes("ebay.com")) platform = "eBay US";
         else if (host.includes("ebay")) platform = "eBay";
 
+        // 1) Slug çıkart
         let slug = path.split("/").pop() || "";
         slug = slug.split("?")[0];
         slug = decodeURIComponent(slug);
         slug = slug.replace(/[-_]/g, " ");
-        const rawWords = slug.split(/\s+/).filter(Boolean);
-        const words = rawWords.filter(w =>
+        let slugWords = slug.split(/\s+/).filter(Boolean).filter(w =>
             !/^\d+$/.test(w) &&
             !["itm","dp","gp","pp","item"].includes(w.toLowerCase())
         );
 
-        const titleGuess = words.length ? words.join(" ") : "Genel ürün (slug çözülemedi)";
+        // 2) Title Scraper Lite → sayfa başlığını çekmeyi dene
+        let pageTitle = "";
+        pageTitle = await tryFetchTitle(normalizedUrl);
 
+        let baseTitle = "";
+        if (pageTitle) {
+            baseTitle = pageTitle;
+        } else if (slugWords.length) {
+            baseTitle = slugWords.join(" ");
+        } else {
+            baseTitle = "Genel ürün";
+        }
+
+        const titleGuess = baseTitle;
         const lowTitle = titleGuess.toLowerCase();
+
+        // kategori
         let category = "Genel";
         if (lowTitle.includes("dog") || lowTitle.includes("cat") || lowTitle.includes("pet"))
             category = "Pet Supplies";
@@ -1018,7 +1097,10 @@
         else if (lowTitle.includes("gym") || lowTitle.includes("fitness") || lowTitle.includes("workout"))
             category = "Sports & Fitness";
 
-        // fiyat modeli v3
+        // kelime listesi
+        const words = titleGuess.split(/\s+/).filter(Boolean);
+
+        // fiyat modeli v3.1
         let basePrice = 19.99;
         if (category === "Pet Supplies") basePrice = 14.99;
         if (category === "Home & Kitchen") basePrice = 18.49;
@@ -1074,7 +1156,8 @@
         if (trendScore >= 80) monthlySales = 50;
         if (trendScore <= 40) monthlySales = 10;
 
-        // Ana özet
+        // --- UI doldurma ---
+
         document.getElementById('mini-main').style.display = 'block';
         document.getElementById('mini-platform').textContent = platform;
         document.getElementById('mini-category').textContent = category;
@@ -1087,10 +1170,15 @@
         if (risk === "Düşük") dropPill.classList.add("green");
 
         const summaryLines = [];
-        summaryLines.push(`• URL, Mini AI tarafından “${titleGuess.substring(0, 80)}${titleGuess.length > 80 ? "..." : ""}” gibi bir ürün olarak algılandı.`);
+        summaryLines.push(`• Mini AI bu linkten ürünü şu şekilde algıladı: “${titleGuess.substring(0, 80)}${titleGuess.length > 80 ? "..." : ""}”.`);
         summaryLines.push(`• Kategori tahmini: ${category}.`);
         summaryLines.push(`• Tahmini drop skoru: ${dropScore.toFixed(0)}/100 (${risk} risk).`);
         summaryLines.push(`• Bu skor, trend + kâr marjı + rekabet tahminine göre hesaplandı.`);
+        if (!pageTitle) {
+            summaryLines.push(`<span style="font-size:11px;color:#9ca3af;">Not: Tarayıcı, sayfa başlığını doğrudan okumaya izin vermedi (CORS). Analiz URL yapısına ve kelimelere göre üretildi.</span>`);
+        } else {
+            summaryLines.push(`<span style="font-size:11px;color:#a7f3d0;">Not: Başlık Title Scraper Lite ile sayfa &lt;title&gt; etiketinden çekildi.</span>`);
+        }
         document.getElementById('mini-summary').innerHTML = summaryLines.join("<br>");
 
         // Ürün özeti kartı
@@ -1115,7 +1203,6 @@
         if (trendScore >= 70) addTag("Trend güçlü", "gold");
         if (dropScore <= 45) addTag("Riskli ürün", "red");
 
-        // fiyat & kâr kartı
         document.getElementById('mini-price-range').textContent =
             "£" + minPrice.toFixed(2) + " – £" + maxPrice.toFixed(2);
         document.getElementById('mini-cost').textContent = toMoney(supplierCost);
@@ -1138,7 +1225,6 @@
             profitPill.textContent = "Güzel kâr (tahmini)";
         }
 
-        // trend & rekabet kartı
         document.getElementById('mini-trend').textContent = trendScore.toFixed(0) + "/100";
         document.getElementById('mini-competition').textContent = competition;
         document.getElementById('mini-monthly-sales').textContent = monthlySales + " adet/ay (tahmini)";
@@ -1155,55 +1241,13 @@
         }
         document.getElementById('mini-test-comment').textContent = testComment;
 
-        // tedarikçi önerisi
         const sup = document.getElementById('mini-supplier');
         sup.innerHTML = buildSupplierHints(words, category, basePrice);
 
-        // temsili görsel açıklaması
         document.getElementById('mini-thumb').innerHTML =
             "Ürün görseli (temsili blok).<br><span style='font-size:10px;color:#9ca3af;'>Ön yüz: " +
             (titleGuess.substring(0, 40)) + (titleGuess.length > 40 ? "..." : "") +
             "</span>";
-    }
-
-    function buildSupplierHints(words, category, basePrice) {
-        const coreKeyword = (words[0] || "product").toLowerCase();
-        const aliexpressRangeLow = (basePrice * 0.3).toFixed(2);
-        const aliexpressRangeHigh = (basePrice * 0.55).toFixed(2);
-
-        let cjKey = coreKeyword;
-        if (category === "Home & Kitchen") cjKey = coreKeyword + " organizer";
-        if (category === "Pet Supplies") cjKey = coreKeyword + " pet";
-        if (category === "Car Accessories") cjKey = coreKeyword + " car";
-        if (category === "Mobile Accessories") cjKey = coreKeyword + " phone";
-
-        let avasamCat = "General Home";
-        if (category === "Home & Kitchen") avasamCat = "Home & Garden";
-        if (category === "Pet Supplies") avasamCat = "Pet Supplies";
-        if (category === "Car Accessories") avasamCat = "Automotive";
-        if (category === "Mobile Accessories") avasamCat = "Consumer Electronics";
-
-        return `
-            <div class="analysis-box">
-                <div class="analysis-header">Tedarikçi Arama Önerileri</div>
-                <strong>CJ Dropshipping:</strong><br>
-                • Arama çubuğuna: <code>${cjKey}</code><br>
-                • Filtre: UK Warehouse + NET invoice (mümkünse)<br><br>
-
-                <strong>Avasam:</strong><br>
-                • Kategori: <code>${avasamCat}</code><br>
-                • Fiyat bandı: £${(basePrice * 0.4).toFixed(2)} – £${(basePrice * 0.7).toFixed(2)}<br><br>
-
-                <strong>AliExpress:</strong><br>
-                • Arama: <code>${coreKeyword}</code><br>
-                • Fiyat beklentisi: ~£${aliexpressRangeLow} – £${aliexpressRangeHigh}<br><br>
-
-                <strong>Temu / Diğer:</strong><br>
-                • Aynı kelime + “set / bundle” ekleyerek benzer ürünleri bulabilirsin.<br><br>
-
-                Not: Bunlar Mini AI tahminleridir. Gerçek tedarikçiyi seçerken; değerlendirme puanı, yorumlar, iade politikası ve kargo süresi mutlaka kontrol edilmeli.
-            </div>
-        `;
     }
 
     // PRINT / PDF (Mini AI paneli)
