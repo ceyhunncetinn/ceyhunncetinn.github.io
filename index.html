@@ -1,115 +1,22 @@
+<script>
+// Şifre kontrolü
+const sifre = prompt("Giriş şifresi:");
+if (sifre !== "kvnb53rcvb") {
+    alert("Yanlış şifre!");
+    window.location.href = "loader.html";
+} else {
+    window.location.href = "home.html";
+}
+</script>
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEYHUN PRO ● Drop Analyzer Login</title>
-
-<style>
-    body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #0d1117, #1b2330);
-        font-family: Arial, sans-serif;
-    }
-
-    .glass {
-        width: 85%;
-        max-width: 380px;
-        padding: 30px;
-        text-align: center;
-        backdrop-filter: blur(12px);
-        background: rgba(255,255,255,0.05);
-        border-radius: 16px;
-        border: 1px solid rgba(255,255,255,0.15);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-        animation: fadeIn 0.7s ease;
-    }
-
-    h2 {
-        color: #fff;
-        font-weight: normal;
-        letter-spacing: 1px;
-        margin-bottom: 25px;
-    }
-
-    input {
-        width: 90%;
-        padding: 12px;
-        border-radius: 10px;
-        border: none;
-        outline: none;
-        margin-bottom: 20px;
-        background: rgba(255,255,255,0.15);
-        color: white;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    .btn {
-        width: 95%;
-        padding: 12px;
-        border: none;
-        border-radius: 10px;
-        background: linear-gradient(135deg,#ff006a,#ff4dd2);
-        color: white;
-        font-size: 17px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-        box-shadow: 0 0 12px rgba(255,0,120,0.5);
-    }
-
-    .btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 18px rgba(255,0,140,0.7);
-    }
-
-    .shake {
-        animation: shake 0.3s ease;
-    }
-
-    @keyframes shake {
-        0% { transform: translateX(0); }
-        25% { transform: translateX(-6px); }
-        50% { transform: translateX(6px); }
-        75% { transform: translateX(-6px); }
-        100% { transform: translateX(0); }
-    }
-
-    @keyframes fadeIn {
-        from { opacity:0; transform: scale(0.95); }
-        to { opacity:1; transform: scale(1); }
-    }
-</style>
+<title>Giriş</title>
 </head>
-<body>
-
-<div class="glass" id="box">
-    <h2>CEYHUN PRO ● Drop Analyzer Login</h2>
-    <input id="pwd" type="password" placeholder="Giriş şifresi...">
-    <button class="btn" onclick="login()">Giriş Yap</button>
-</div>
-
-<script>
-function login() {
-    let sifre = document.getElementById("pwd").value;
-    let kutu = document.getElementById("box");
-
-    if (sifre === "kvnb53rcvb") {
-        // Doğru şifre: loader'a geç
-        window.location.href = "loader.html";
-    } else {
-        // Yanlış şifre: titreme efekti
-        kutu.classList.add("shake");
-        setTimeout(() => kutu.classList.remove("shake"), 300);
-        document.getElementById("pwd").value = "";
-    }
-}
-</script>
-
+<body style="background:#0d1117; color:white; font-family:Arial;">
+<h2 style="text-align:center; margin-top:40px;">Giriş kontrol ediliyor...</h2>
 </body>
 </html>
