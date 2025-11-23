@@ -1,22 +1,37 @@
-<script>
-// Şifre kontrolü
-const sifre = prompt("Giriş şifresi:");
-if (sifre !== "kvnb53rcvb") {
-    alert("Yanlış şifre!");
-    window.location.href = "loader.html";
-} else {
-    window.location.href = "home.html";
-}
-</script>
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Giriş</title>
+<title>CEYHUN PRO • Drop Analyzer Login</title>
+<style>
+    body {
+        background: #0d1117;
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding-top: 120px;
+    }
+    h1 {
+        color: #f1c40f;
+        margin-bottom: 20px;
+    }
+</style>
+<script>
+    // Şifre ekranı açılır açılmaz gelir
+    const sifre = prompt("Giriş şifresi:");
+
+    if (sifre === "kvnb53rcvb") {
+        window.location.href = "home.html"; // Doğru şifre → içeri
+    } else {
+        alert("Yanlış şifre!");
+        window.location.href = "loader.html"; // Yanlış → loader'a atar
+    }
+</script>
 </head>
-<body style="background:#0d1117; color:white; font-family:Arial;">
-<h2 style="text-align:center; margin-top:40px;">Giriş kontrol ediliyor...</h2>
+
+<body>
+<h1>CEYHUN PRO • Drop Analyzer Login</h1>
+<p>Giriş doğrulanıyor...</p>
 </body>
 </html>
