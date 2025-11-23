@@ -586,8 +586,8 @@
                 <p>eBay dropshipping için yapay zekâ tadında, tamamen ücretsiz analiz paneli.</p>
             </div>
             <div class="chip-row">
-                <div class="chip green">Ücretsiz • Local analiz</div>
-                <div class="chip blue">AI Ready • OpenAI key ile genişler</div>
+                <div class="chip.green chip green">Ücretsiz • Local analiz</div>
+                <div class="chip.blue chip blue">AI Ready • OpenAI key ile genişler</div>
             </div>
         </div>
 
@@ -599,15 +599,29 @@
                         <div class="card-header">
                             <div>
                                 <div class="card-title">Drop Analyzer</div>
-                                <div class="card-sub">Ürün detayını gir, sistem senin yerine düşünüp skor versin.</div>
+                                <div class="card-sub">eBay linkini yapıştır → başlığı otomatik çek + skor al.</div>
                             </div>
-                            <span class="badge-soft.green badge-soft green">Ücretsiz Akıllı Analiz</span>
+                            <span class="badge-soft green">Ücretsiz Akıllı Analiz</span>
                         </div>
 
+                        <!-- LINK INPUT -->
                         <div class="form-row">
                             <div>
-                                <label>Ürün Başlığı / Kısa Açıklama</label>
-                                <textarea id="da-title" placeholder="Örn: Stainless Steel Kitchen Organizer Rack, 3 Tier"></textarea>
+                                <label>eBay Ürün Linki</label>
+                                <input id="da-link" placeholder="https://www.ebay.co.uk/itm/XXXXXXXX">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-outline" onclick="fetchTitleFromEbay()">
+                            🔄 Ürün Bilgilerini Çek
+                        </button>
+
+                        <div id="link-status" class="small-note" style="margin-top: 8px;"></div>
+
+                        <div class="form-row" style="margin-top:10px;">
+                            <div>
+                                <label>Ürün Başlığı (otomatik dolar, gerekirse elle düzenleyebilirsin)</label>
+                                <textarea id="da-title" placeholder="Linkten çekilemezse buraya başlığı yazabilirsin."></textarea>
                             </div>
                         </div>
 
@@ -1011,10 +1025,10 @@
     // GLOBAL AI mode flag
     let AI_MODE = false;
 
-    // NAV SWITCH
+    // NAV SWITCH (AI toggle hariç)
     document.querySelectorAll('.nav-btn').forEach(btn => {
         const target = btn.getAttribute('data-target');
-        if (!target) return; // AI toggle hariç
+        if (!target) return;
 
         btn.addEventListener('click', () => {
             document.querySelectorAll('.nav-btn').forEach(b => {
@@ -1038,6 +1052,47 @@
         return Math.min(Math.max(v, min), max);
     }
 
+    // LINK → TITLE SCRAPER (ÜCRETSİZ)
+    async function fetchTitleFromEbay() {
+        const url = (document.getElementById("da-link").value || "").trim();
+        const status = document.getElementById("link-status");
+
+        if (!url) {
+            alert("Kanka önce eBay linkini yapıştır :)");
+            return;
+        }
+
+        status.textContent = "Ürün bilgisi çekiliyor...";
+
+        try {
+            const proxy = "https://api.allorigins.win/get?url=" + encodeURIComponent(url);
+            const res = await fetch(proxy);
+            const data = await res.json();
+            const html = data.contents || "";
+
+            const titleMatch = html.match(/<title>(.*?)<\/title>/i);
+
+            if (titleMatch && titleMatch[1]) {
+                let title = titleMatch[1];
+                title = title.replace(/for sale online.*$/i, "");
+                title = title.replace(/ebay uk/i, "");
+                title = title.replace(/ebay/i, "");
+                title = title.replace(/\|/g, " ");
+                title = title.trim();
+
+                document.getElementById("da-title").value = title;
+                status.textContent = "✔️ Başlık bulundu: " + title;
+
+                // İstersen direkt analiz de başlatıyoruz:
+                // runDropAnalyzer();
+            } else {
+                status.textContent = "❌ Ürün başlığı çekilemedi, istersen başlığı elle yaz.";
+            }
+        } catch (e) {
+            status.textContent = "❌ Link okunamadı. Farklı bir ürün linki dene veya başlığı elle yaz.";
+        }
+    }
+
     // DROP ANALYZER LOGIC
     function runDropAnalyzer() {
         const title = (document.getElementById('da-title').value || "").trim();
@@ -1047,7 +1102,7 @@
         const comp = document.getElementById('da-competition').value;
 
         if (!title || !cost || !sell) {
-            alert("Kanka, en azından başlık, alış ve satış fiyatını girmen lazım :)");
+            alert("Kanka, en azından başlık, alış ve satış fiyatını girmen lazım :) (Başlık için linkten çekebilirsin)");
             return;
         }
 
@@ -1178,7 +1233,7 @@
         const title = (document.getElementById("da-title").value || "").toLowerCase().trim();
 
         if (!title) {
-            alert("Kanka önce ürün başlığını yaz ki kategoriyi bulayım :)");
+            alert("Kanka önce ürün başlığını yaz ya da linkten çekelim :)");
             return;
         }
 
@@ -1559,7 +1614,7 @@ ${words.map(t => "• " + t).join("\n")}
         document.getElementById("seo-result").innerHTML = result;
     }
 
-    // AI MODE TOGGLE + REAL OPENAI (isteğe bağlı)
+    // AI MODE TOGGLE (gerçek OpenAI için hazır)
     function toggleAI() {
         AI_MODE = !AI_MODE;
         const ind = document.getElementById("ai-indicator");
