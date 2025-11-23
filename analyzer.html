@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CEYHUN PRO • Drop Analyzer v1</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #0d1117;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    .nav {
+        width: 100%;
+        padding: 15px 25px;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        position: sticky;
+        top: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .nav h1 {
+        margin: 0;
+        font-size: 20px;
+        letter-spacing: 1px;
+        background: linear-gradient(90deg, #ff4dd2, #ff008c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+    }
+
+    .nav button {
+        padding: 8px 14px;
+        border-radius: 10px;
+        border: none;
+        background: rgba(255,255,255,0.12);
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+    }
+
+    .wrapper {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 0 15px 30px;
+        display: grid;
+        gap: 20px;
+    }
+
+    .card {
+        background: rgba(255,255,255,0.04);
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.12);
+        padding: 18px 18px 22px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+    }
+
+    .card h2 {
+        margin: 0 0 10px;
+        font-size: 18px;
+        color: #ff4dd2;
+    }
+
+    .row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    label {
+        font-size: 13px;
+        opacity: .9;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        margin-top: 4px;
+        padding: 9px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.2);
+        background: #0d1117;
+        color: #fff;
+        font-size: 14px;
+        outline: none;
+    }
+
+    textarea {
+        resize: vertical;
+        min-height: 60px;
+    }
+
+    .btn-row {
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+        flex-wrap: wrap;
+    }
+
+    .btn-main {
+        flex: 1;
+        min-width: 160px;
+        padding: 11px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        background: linear-gradient(135deg,#ff006a,#ff4dd2);
+        color: #fff;
+        box-shadow: 0 0 14px rgba(255,0,140,0.55);
+        transition: 0.2s;
+    }
+
+    .btn-main:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 20px rgba(255,0,140,0.75);
+    }
+
+    .btn-secondary {
+        flex: 1;
+        min-width: 160px;
+        padding: 11px;
+        border-radius: 10px;
+        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.04);
+        color: #fff;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .badge {
+        display: inline-block;
+        font-size: 11px;
+        padding: 2px 8px;
+        border-radius: 20px;
+        margin-left: 6px;
+    }
+
+    .badge-free {
+        background: #2e7d32;
+        color: #c8ffc8;
+    }
+
+    .badge-premium {
+        background: #4527a0;
+        color: #e6d6ff;
+    }
+
+    .result {
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: pre-line;
+    }
+
+    .pill {
+        display: inline-block;
+        font-size: 12px;
+        padding: 3px 9px;
+        border-radius: 999px;
+        margin-right: 6px;
+        margin-top: 4px;
+    }
+
+    .pill-good {
+        background: rgba(46, 125, 50, 0.2);
+        color: #a5d6a7;
+        border: 1px solid #2e7d32;
+    }
+
+    .pill-mid {
+        background: rgba(255, 193, 7, 0.15);
+        color: #ffe082;
+        border: 1px solid #ffb300;
+    }
+
+    .pill-bad {
+        background: rgba(244, 67, 54, 0.18);
+        color: #ef9a9a;
+        border: 1px solid #e53935;
+    }
+
+    .hint {
+        font-size: 12px;
+        opacity: .7;
+        margin-top: 6px;
+    }
+
+    @media (max-width: 600px) {
+        .nav {
+            padding: 12px 14px;
+        }
+        .nav h1 {
+            font-size: 16px;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="nav">
+    <h1>CEYHUN PRO ● Drop Analyzer v1</h1>
+    <button onclick="window.location.href='home.html'">◀ Dashboard</button>
+</div>
+
+<div class="wrapper">
+
+    <!-- GİRİŞ BİLGİLERİ -->
+    <div class="card">
+        <h2>Ürün Bilgisi</h2>
+        <label>Ürün adı</label>
+        <textarea id="productName" placeholder="Örn: 300x Air Fryer Liners Disposable Non-Stick UK Stock"></textarea>
+
+        <label>Ürün linki (eBay / Amazon / AliExpress / CJ)</label>
+        <input id="productUrl" placeholder="İstersen sadece link de girebilirsin, opsiyonel.">
+
+        <div class="row">
+            <div>
+                <label>Maliyet (£)</label>
+                <input id="cost" type="number" step="0.01" placeholder="Örn: 3.50">
+            </div>
+            <div>
+                <label>Kargo (£)</label>
+                <input id="shipping" type="number" step="0.01" placeholder="Örn: 2.00">
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <label>Satış fiyatı (£)</label>
+                <input id="price" type="number" step="0.01" placeholder="Örn: 9.99">
+            </div>
+            <div>
+                <label>eBay ücreti (%)</label>
+                <input id="fee" type="number" step="0.1" placeholder="Örn: 13">
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <label>Pazar yeri</label>
+                <select id="market">
+                    <option value="ebay_uk">eBay UK</option>
+                    <option value="amazon_uk">Amazon UK</option>
+                    <option value="aliexpress">AliExpress</option>
+                    <option value="cj">CJdropshipping</option>
+                </select>
+            </div>
+            <div>
+                <label>Kategori tahmini</label>
+                <select id="category">
+                    <option value="kitchen">Mutfak & Ev</option>
+                    <option value="home">Ev & Dekor</option>
+                    <option value="electronics">Elektronik</option>
+                    <option value="beauty">Kozmetik & Kişisel Bakım</option>
+                    <option value="pets">Evcil Hayvan</option>
+                    <option value="other">Diğer</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="btn-main" onclick="runFreeAnalysis()">
+                Hızlı Analiz
+                <span class="badge badge-free">ÜCRETSİZ AI</span>
+            </button>
+            <button class="btn-secondary" onclick="runPremiumHint()">
+                AI Premium Analiz
+                <span class="badge badge-premium">GELECEK</span>
+            </button>
+        </div>
+
+        <div class="hint">
+            💡 Not: Şu an “Hızlı Analiz” tamamen ücretsiz, tarayıcı içinde çalışıyor. <br>
+            İleride “AI Premium Analiz” butonuna OpenAI / gerçek API bağlayarak ekstra derin analiz ekleyebilirsin.
+        </div>
+    </div>
+
+    <!-- SONUÇLAR -->
+    <div class="card">
+        <h2>Analiz Sonucu</h2>
+        <div id="tags"></div>
+        <div id="result" class="result" style="margin-top:10px;">
+            Henüz analiz yapılmadı. Ürün bilgilerini girip “Hızlı Analiz”e bas.
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Basit, yerel "AI benzeri" analiz motoru
+function runFreeAnalysis() {
+    const name = (document.getElementById('productName').value || "").trim();
+    const url = (document.getElementById('productUrl').value || "").trim();
+    const cost = parseFloat(document.getElementById('cost').value) || 0;
+    const shipping = parseFloat(document.getElementById('shipping').value) || 0;
+    const price = parseFloat(document.getElementById('price').value) || 0;
+    const fee = parseFloat(document.getElementById('fee').value) || 13;
+    const market = document.getElementById('market').value;
+    const category = document.getElementById('category').value;
+
+    if (!name && !url) {
+        alert("Kanka en az ürün adı veya link girmelisin.");
+        return;
+    }
+    if (!price) {
+        alert("Satış fiyatı girmeden analiz çok anlamlı olmaz kankam.");
+        return;
+    }
+
+    const totalCost = cost + shipping;
+    const feeAmount = price * (fee / 100);
+    const profit = price - totalCost - feeAmount;
+    const margin = price ? (profit / price) * 100 : 0;
+
+    // Talep & rekabet skoru (basit tahmin)
+    let demandScore = 50;
+    let competitionScore = 50;
+
+    const lowerName = name.toLowerCase();
+    if (lowerName.includes("air fryer") || lowerName.includes("liner")) {
+        demandScore += 25;
+    }
+    if (category === "kitchen") demandScore += 10;
+    if (market === "ebay_uk") demandScore += 5;
+
+    if (price < 10) competitionScore += 20; // ucuz ürünlerde rakip çok
+    if (price > 20) competitionScore -= 10;
+    if (margin > 25) competitionScore -= 10;
+
+    if (demandScore > 100) demandScore = 100;
+    if (competitionScore < 0) competitionScore = 0;
+    if (competitionScore > 100) competitionScore = 100;
+
+    // Skor yorumları
+    let demandLabel = demandScore >= 70 ? "Yüksek" : demandScore >= 50 ? "Orta" : "Düşük";
+    let compLabel = competitionScore >= 70 ? "Yüksek" : competitionScore >= 50 ? "Orta" : "Düşük";
+
+    // Tedarikçi önerisi (lokal mantık)
+    let supplier = "Genel: UK deposu olan tedarikçi bulman önemli, Avasam / CJ / Eprolo kontrol et.";
+    if (market === "cj") {
+        supplier = "CJdropshipping → UK / DE warehouse filtreleyerek bak kanka.";
+    } else if (market === "ebay_uk") {
+        supplier = "Avasam NET / CJ UK / Amazon UK FBA kaynaklı tedarikçiler iş görebilir.";
+    } else if (market === "aliexpress") {
+        supplier = "AliExpress EU/UK warehouse seçeneği varsa onları tercih et, Çin stokta teslim süresine dikkat.";
+    } else if (market === "amazon_uk") {
+        supplier = "Amazon UK → FBA / Prime ürünler, eBay'e taşınabilir ama hesap engel riskini unutma.";
+
+    }
+
+    // Kar yorumu
+    let profitComment = "";
+    if (profit < 0) {
+        profitComment = "❌ Bu fiyatla net kâra geçemiyorsun. Fiyatı artır veya daha ucuz tedarikçi bul.";
+    } else if (profit < 2) {
+        profitComment = "⚠ Kâr var ama düşük (£" + profit.toFixed(2) + "). Daha iyi kâr için fiyatı biraz yükselt veya maliyeti düşür.";
+    } else if (profit < 5) {
+        profitComment = "✅ Makul bir kâr var. Rakip fiyatlarını kontrol edip ufak optimizasyon yapılabilir.";
+    } else {
+        profitComment = "🔥 Güçlü kâr marjı! Rekabet çok korkutucu değilse bu ürün üzerine gidilebilir.";
+    }
+
+    // Son skor
+    let finalScore = demandScore - (competitionScore * 0.4) + (margin * 0.3);
+    if (finalScore > 100) finalScore = 100;
+    if (finalScore < 0) finalScore = 0;
+
+    let decision = "";
+    if (finalScore >= 70) {
+        decision = "Öneri: Denemeye değer, özellikle birkaç varyasyon / farklı fiyatla test edebilirsin.";
+    } else if (finalScore >= 50) {
+        decision = "Öneri: Nötr. Listeleyebilirsin ama stok ve fiyat konusunda agresif olma.";
+    } else {
+        decision = "Öneri: Bu ürün yerine daha güçlü talep veya kârı olan başka ürünlere yönelebilirsin.";
+    }
+
+    // Etiketler
+    const tagsEl = document.getElementById('tags');
+    tagsEl.innerHTML = "";
+    tagsEl.innerHTML += `<span class="pill ${margin >= 25 ? 'pill-good' : margin >= 10 ? 'pill-mid' : 'pill-bad'}">Kâr Marjı: ${margin.toFixed(1)}%</span>`;
+    tagsEl.innerHTML += `<span class="pill ${demandScore >= 70 ? 'pill-good' : demandScore >= 50 ? 'pill-mid' : 'pill-bad'}">Talep: ${demandLabel}</span>`;
+    tagsEl.innerHTML += `<span class="pill ${competitionScore <= 40 ? 'pill-good' : competitionScore <= 60 ? 'pill-mid' : 'pill-bad'}">Rekabet: ${compLabel}</span>`;
+
+    const res = [];
+
+    res.push("📌 ÜRÜN ÖZETİ");
+    res.push(`• Ürün: ${name || "(Sadece link ile analiz)"}`);
+    if (url) res.push(`• Link: ${url}`);
+    res.push(`• Pazar yeri: ${marketLabel(market)} | Kategori: ${categoryLabel(category)}`);
+    res.push("");
+
+    res.push("💰 FİYAT & KÂR ANALİZİ");
+    res.push(`• Toplam maliyet (ürün + kargo): £${totalCost.toFixed(2)}`);
+    res.push(`• eBay ücreti (~${fee.toFixed(1)}%): £${feeAmount.toFixed(2)}`);
+    res.push(`• Net kâr: £${profit.toFixed(2)} (${margin.toFixed(1)}%)`);
+    res.push(`• Genel yorum: ${profitComment}`);
+    res.push("");
+
+    res.push("📈 TALEP & REKABET (Yerel AI Tahmini)");
+    res.push(`• Talep skoru: ${demandScore}/100 (${demandLabel})`);
+    res.push(`• Rekabet skoru: ${competitionScore}/100 (${compLabel})`);
+    res.push("");
+
+    res.push("🚚 TEDARİKÇİ ÖNERİSİ");
+    res.push(`• ${supplier}`);
+    res.push("");
+
+    res.push("🧠 CEYHUN PRO KARAR MOTORU");
+    res.push(`• Genel skor: ${finalScore.toFixed(1)}/100`);
+    res.push(`• Sonuç: ${decision}`);
+
+    document.getElementById('result').innerText = res.join("\n");
+}
+
+// Hibrit: İleride gerçek AI bağlamak için placeholder
+function runPremiumHint() {
+    alert(
+        "Kanka burası hibrit yapay zeka için hazır.\n\n" +
+        "- İleride buraya OpenAI / başka bir API bağlayıp:\n" +
+        "  • AI ile ürün açıklaması\n" +
+        "  • Optimize eBay başlığı\n" +
+        "  • Gerçek zamanlı rakip analizi\n" +
+        "  • Daha gelişmiş satış tahmini\n" +
+        "gibi işlemleri gerçek yapay zeka ile yaptırabilirsin.\n\n" +
+        "Şimdilik ücretsiz Hızlı Analiz'i kullanıyoruz. 🚀"
+    );
+}
+
+function marketLabel(m) {
+    switch (m) {
+        case "ebay_uk": return "eBay UK";
+        case "amazon_uk": return "Amazon UK";
+        case "aliexpress": return "AliExpress";
+        case "cj": return "CJdropshipping";
+        default: return "Diğer";
+    }
+}
+
+function categoryLabel(c) {
+    switch (c) {
+        case "kitchen": return "Mutfak & Ev";
+        case "home": return "Ev & Dekor";
+        case "electronics": return "Elektronik";
+        case "beauty": return "Kozmetik & Kişisel Bakım";
+        case "pets": return "Evcil Hayvan";
+        default: return "Diğer";
+    }
+}
+</script>
+
+</body>
+</html>
