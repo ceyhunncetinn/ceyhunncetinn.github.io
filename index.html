@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CEYHUN PRO • Drop Analyzer Login</title>
+<title>CEYHUN PRO ● Drop Analyzer Login</title>
 
 <style>
     body {
@@ -79,13 +79,12 @@
         75% { transform: translateX(-6px); }
         100% { transform: translateX(0); }
     }
-    
+
     @keyframes fadeIn {
         from { opacity:0; transform: scale(0.95); }
         to { opacity:1; transform: scale(1); }
     }
 </style>
-
 </head>
 <body>
 
@@ -101,8 +100,10 @@ function login() {
     let kutu = document.getElementById("box");
 
     if (sifre === "kvnb53rcvb") {
+        // Doğru şifre: loader'a geç
         window.location.href = "loader.html";
     } else {
+        // Yanlış şifre: titreme efekti
         kutu.classList.add("shake");
         setTimeout(() => kutu.classList.remove("shake"), 300);
         document.getElementById("pwd").value = "";
