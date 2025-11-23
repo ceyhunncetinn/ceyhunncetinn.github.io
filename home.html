@@ -39,13 +39,13 @@
 
         /* Sidebar */
         .sidebar {
-            width: 260px;
+            width: 270px;
             background: linear-gradient(to bottom, #020617 0%, #020617 60%, #020617 100%);
             border-right: 1px solid var(--border-subtle);
             padding: 20px 18px;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 20px;
         }
 
         .logo-box {
@@ -80,12 +80,6 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            <button class="nav-btn" data-target="panel-competitor">
-    <span class="icon">🏪</span>
-    Rakip Mağaza Analizi
-    <span class="pill">Rakip analizi</span>
-</button>
-
         }
 
         .nav-btn {
@@ -127,6 +121,7 @@
             border-radius: 999px;
             border: 1px solid rgba(148, 163, 184, 0.4);
             color: var(--text-muted);
+            margin-left: auto;
         }
 
         .sidebar-footer {
@@ -224,40 +219,6 @@
             from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-            <section class="panel" id="panel-competitor">
-    <div class="card">
-        <div class="card-header">
-            <div>
-                <div class="card-title">Rakip Mağaza Analizi</div>
-                <div class="card-sub">Herhangi bir eBay mağazasını gir → AI benzeri analiz</div>
-            </div>
-            <span class="badge-soft blue">Mini AI</span>
-        </div>
-
-        <div class="form-row">
-            <div>
-                <label>Rakip eBay Mağazası</label>
-                <input id="cs-store" placeholder="Örn: best_home_store_uk">
-            </div>
-            <div>
-                <label>Mağaza Türü</label>
-                <select id="cs-type">
-                    <option>Genel Dropshipping</option>
-                    <option>Brand/Markalı</option>
-                    <option>Niş Mağaza</option>
-                    <option>Karışık Ürünler</option>
-                </select>
-            </div>
-        </div>
-
-        <button class="btn btn-primary" onclick="runCompetitor()">
-            🧠 Rakip Analizini Çalıştır
-        </button>
-
-        <div id="cs-result" style="margin-top:10px;"></div>
-    </div>
-</section>
 
         /* Cards + layout */
         .grid-2 {
@@ -504,13 +465,6 @@
             transition: width 0.25s ease-out;
         }
 
-        .pill-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 6px;
-        }
-
         .small-note {
             font-size: 10px;
             color: var(--text-muted);
@@ -528,13 +482,19 @@
                 height: auto;
                 border-right: none;
                 border-bottom: 1px solid var(--border-subtle);
+                white-space: nowrap;
             }
             .logo-box {
-                min-width: 180px;
+                min-width: 200px;
+                flex-shrink: 0;
             }
             .nav-group {
                 flex-direction: row;
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+            }
+            .nav-btn {
+                min-width: 240px;
+                flex-shrink: 0;
             }
             .main {
                 padding: 10px 12px 14px;
@@ -542,6 +502,15 @@
             .main-header {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 820px) {
+            .grid-2 {
+                grid-template-columns: 1fr !important;
             }
         }
     </style>
@@ -578,12 +547,28 @@
                     Trend Explorer
                     <span class="pill">Trend analizi</span>
                 </button>
+                <button class="nav-btn" data-target="panel-competitor">
+                    <span class="icon">🏪</span>
+                    Rakip Mağaza Analizi
+                    <span class="pill">Rakip analiz</span>
+                </button>
+                <button class="nav-btn" data-target="panel-seo">
+                    <span class="icon">📝</span>
+                    eBay SEO Optimizer
+                    <span class="pill">Başlık & SEO</span>
+                </button>
+                <button class="nav-btn" id="ai-toggle-btn" onclick="toggleAI()">
+                    <span class="icon">🤖</span>
+                    AI Mode
+                    <span class="pill" id="ai-indicator">Kapalı</span>
+                </button>
             </div>
         </div>
 
         <div class="sidebar-footer">
             <div>Analiz modu: <strong>Ücretsiz Akıllı Motor</strong></div>
-            <div class="small-note">Tüm hesaplamalar tarayıcı içinde çalışır.  
+            <div class="small-note">
+                Tüm hesaplamalar tarayıcı içinde çalışır.  
                 İstersen daha sonra OpenAI API key ekleyip gerçek yapay zekâ kullanabilirsin.
             </div>
             <div class="ai-badge">
@@ -598,7 +583,7 @@
         <div class="main-header">
             <div class="title-block">
                 <h1>Drop Analyzer Dashboard</h1>
-                <p>eBay dropshipping için yapay zeka tadında, tamamen ücretsiz analiz paneli.</p>
+                <p>eBay dropshipping için yapay zekâ tadında, tamamen ücretsiz analiz paneli.</p>
             </div>
             <div class="chip-row">
                 <div class="chip green">Ücretsiz • Local analiz</div>
@@ -616,7 +601,7 @@
                                 <div class="card-title">Drop Analyzer</div>
                                 <div class="card-sub">Ürün detayını gir, sistem senin yerine düşünüp skor versin.</div>
                             </div>
-                            <span class="badge-soft green">Ücretsiz Akıllı Analiz</span>
+                            <span class="badge-soft.green badge-soft green">Ücretsiz Akıllı Analiz</span>
                         </div>
 
                         <div class="form-row">
@@ -653,6 +638,15 @@
                             <span class="btn-icon">⚡</span>
                             Ürünü Analiz Et
                         </button>
+
+                        <button class="btn btn-outline" onclick="autoCategoryAI()">
+                            🧠 Auto Category
+                        </button>
+
+                        <div id="auto-cat-result" class="analysis-box" style="display:none; margin-top:10px;">
+                            <div class="analysis-header">Kategori Tahmini</div>
+                            <div id="auto-cat-text"></div>
+                        </div>
 
                         <div class="small-note">
                             Not: Bu analiz, Ceyhun Pro için özel tasarlanmış kural tabanlı bir “mini yapay zekâ motoru” ile yapılır.
@@ -922,20 +916,114 @@
                     </div>
                 </div>
             </section>
+
+            <!-- RAKİP MAĞAZA ANALİZİ PANEL -->
+            <section class="panel" id="panel-competitor">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Rakip Mağaza Analizi</div>
+                                <div class="card-sub">Herhangi bir eBay mağazasını gir → mini AI tarzı analiz.</div>
+                            </div>
+                            <span class="badge-soft blue">Mini AI</span>
+                        </div>
+
+                        <div class="form-row">
+                            <div>
+                                <label>Rakip eBay Mağazası</label>
+                                <input id="cs-store" placeholder="Örn: best_home_store_uk">
+                            </div>
+                            <div>
+                                <label>Mağaza Türü</label>
+                                <select id="cs-type">
+                                    <option>Genel Dropshipping</option>
+                                    <option>Brand/Markalı</option>
+                                    <option>Niş Mağaza</option>
+                                    <option>Karışık Ürünler</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="runCompetitor()">
+                            🧠 Rakip Analizini Çalıştır
+                        </button>
+
+                        <div id="cs-result" style="margin-top:10px;"></div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">Mağaza Gelir Tahmini</div>
+                                <div class="card-sub">Satış adedi + fiyat → tahmini aylık ciro.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div>
+                                <label>Tahmini Ürün Sayısı</label>
+                                <input id="rev-products" placeholder="Örn: 120">
+                            </div>
+                            <div>
+                                <label>Günlük Tahmini Satış</label>
+                                <input id="rev-daily" placeholder="Örn: 4">
+                            </div>
+                            <div>
+                                <label>Ortalama Fiyat (£)</label>
+                                <input id="rev-price" placeholder="Örn: 17">
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" onclick="runRevenueAI()">💰 Ciro Hesapla</button>
+
+                        <div id="rev-result" style="margin-top:10px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEO OPTIMIZER PANEL -->
+            <section class="panel" id="panel-seo">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">eBay SEO Optimizer</div>
+                            <div class="card-sub">Başlığını güçlendir + basit SEO puanı al.</div>
+                        </div>
+                        <span class="badge-soft blue">SEO AI</span>
+                    </div>
+
+                    <label>Mevcut Başlık</label>
+                    <textarea id="seo-title" placeholder="Örn: Stainless Steel Kitchen Rack Organizer"></textarea>
+
+                    <button class="btn btn-primary" onclick="runSEO()">
+                        🔍 SEO Analizi
+                    </button>
+
+                    <div id="seo-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
         </div>
     </main>
 </div>
 
 <script>
+    // GLOBAL AI mode flag
+    let AI_MODE = false;
+
     // NAV SWITCH
     document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.add_tap = false;
+        const target = btn.getAttribute('data-target');
+        if (!target) return; // AI toggle hariç
+
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                const t = b.getAttribute('data-target');
+                if (t) b.classList.remove('active');
+            });
             document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
 
             btn.classList.add('active');
-            const target = btn.getAttribute('data-target');
             document.getElementById(target).classList.add('active');
         });
     });
@@ -1083,6 +1171,35 @@
         if (profit <= 0) makeTag("Dikkat: zararda", "red");
         if (score >= 70) makeTag("Test etmeye değer", "green");
         if (score < 40) makeTag("Riskli ürün", "red");
+    }
+
+    // AUTO CATEGORY AI
+    function autoCategoryAI() {
+        const title = (document.getElementById("da-title").value || "").toLowerCase().trim();
+
+        if (!title) {
+            alert("Kanka önce ürün başlığını yaz ki kategoriyi bulayım :)");
+            return;
+        }
+
+        let category = "General Home";
+        if (title.includes("dog") || title.includes("cat") || title.includes("pet")) category = "Pet Supplies";
+        if (title.includes("kitchen") || title.includes("rack") || title.includes("pan") || title.includes("knife")) category = "Home & Kitchen";
+        if (title.includes("car") || title.includes("auto")) category = "Car Accessories";
+        if (title.includes("phone") || title.includes("case")) category = "Mobile Accessories";
+        if (title.includes("toy") || title.includes("kids")) category = "Toys & Kids";
+        if (title.includes("beauty") || title.includes("face") || title.includes("skincare")) category = "Beauty & Personal";
+        if (title.includes("lamp") || title.includes("light")) category = "Lighting";
+
+        const words = title.split(" ").filter(Boolean);
+        const text = `
+• Tahmini kategori: **${category}**  
+• Ürün başlığından çıkarılan anahtar kelimeler:
+${words.map(t => "• " + t).join("\n")}
+        `;
+
+        document.getElementById("auto-cat-result").style.display = "block";
+        document.getElementById("auto-cat-text").innerHTML = text;
     }
 
     // PRODUCT FINDER LOGIC
@@ -1325,16 +1442,148 @@
         });
     }
 
+    // RAKİP MAĞAZA ANALİZİ
+    function runCompetitor() {
+        const store = (document.getElementById("cs-store").value || "").trim();
+        const type = document.getElementById("cs-type").value;
+
+        if (!store) {
+            alert("Kanka rakip mağaza adını girmeden analiz yapamam :)");
+            return;
+        }
+
+        let score = 60;
+
+        if (type === "Genel Dropshipping") score += 5;
+        if (type === "Niş Mağaza") score += 15;
+        if (type === "Brand/Markalı") score += 10;
+
+        let risk = "Orta";
+        if (score > 80) risk = "Düşük";
+        if (score < 50) risk = "Yüksek";
+
+        const analysis = `
+        <div class="analysis-box">
+            <div class="analysis-header">Mağaza İncelemesi</div>
+            • Rakip: ${store}  
+            • Mağaza türü: ${type}  
+            • Tahmini rekabet skoru: ${score}/100 (${risk} risk)
+            <br><br>
+            <strong>Mini Yorum:</strong>
+            • Bu mağaza büyük ihtimalle haftada 3–5 ürün ekleyen aktif bir mağaza.  
+            • Satışları muhtemelen 15–60 adet/ay arasıdır.  
+            • Fiyat optimizasyonu zayıf ise sen rahatça geçebilirsin.  
+            • Niş mağaza türü seçtiysen yüksek trend potansiyeli var.
+        </div>
+        `;
+
+        document.getElementById("cs-result").innerHTML = analysis;
+    }
+
+    // MAĞAZA GELİR TAHMİNİ
+    function runRevenueAI() {
+        const p = parseInt(document.getElementById("rev-products").value) || 0;
+        const d = parseInt(document.getElementById("rev-daily").value) || 0;
+        const price = parseFloat(document.getElementById("rev-price").value) || 0;
+
+        if (!p || !d || !price) {
+            alert("Kanka 3 kutuyu da doldur ki ciroyu doğru hesaplayayım :)");
+            return;
+        }
+
+        const monthlySales = d * 30;
+        const revenue = monthlySales * price;
+
+        const result = `
+        <div class="analysis-box">
+            <div class="analysis-header">Ciro Analizi</div>
+            • Tahmini ürün sayısı: ${p}  
+            • Günlük satış: ${d}  
+            • Aylık satış: ${monthlySales}  
+            • Ortalama fiyat: £${price.toFixed(2)}  
+            <br>
+            <strong>→ Tahmini Aylık Ciro: £${revenue.toFixed(2)}</strong>
+            <br><br>
+            Mini Yorum:  
+            • Bu mağaza muhtemelen aktif satıcıdır.  
+            • Günlük satış 8+ olsaydı, aylık ciro çok daha güçlü görünürdü.  
+            • Sen aynı nişte daha iyi görsellerle onu yakalayabilirsin.
+        </div>
+        `;
+
+        document.getElementById("rev-result").innerHTML = result;
+    }
+
+    // SEO OPTIMIZER
+    function runSEO() {
+        const title = (document.getElementById("seo-title").value || "").trim();
+
+        if (!title) {
+            alert("Kanka önce bir başlık yazalım :)");
+            return;
+        }
+
+        const words = title.toLowerCase().split(" ").filter(Boolean);
+
+        let score = 60;
+        if (words.length < 5) score -= 10;
+        if (words.length > 12) score -= 5;
+        if (title.toLowerCase().includes("stainless") || title.toLowerCase().includes("premium")) score += 10;
+        if (title.toLowerCase().includes("organizer") || title.toLowerCase().includes("rack")) score += 7;
+
+        const recommended = [
+            "2025 New",
+            "High Quality",
+            "Fast UK Shipping",
+            "Trending",
+            "Limited Stock",
+            "Multi Purpose"
+        ];
+
+        const result = `
+        <div class="analysis-box">
+            <div class="analysis-header">SEO Skoru</div>
+            • Başlık: ${title}  
+            • SEO Puanı: ${score}/100  
+            <br><br>
+            <strong>Önerilen Kelimeler:</strong>
+            <div class="tag-row">
+                ${recommended.map(k => `<span class="tag green">${k}</span>`).join("")}
+            </div>
+            <br>
+            <strong>Optimize Başlık Örneği:</strong><br>
+            ${title} | Fast UK Shipping | 2025 Trending
+        </div>
+        `;
+
+        document.getElementById("seo-result").innerHTML = result;
+    }
+
+    // AI MODE TOGGLE + REAL OPENAI (isteğe bağlı)
+    function toggleAI() {
+        AI_MODE = !AI_MODE;
+        const ind = document.getElementById("ai-indicator");
+        ind.textContent = AI_MODE ? "Açık" : "Kapalı";
+        if (AI_MODE) {
+            ind.style.borderColor = "#22c55e";
+        } else {
+            ind.style.borderColor = "rgba(148,163,184,0.4)";
+        }
+        alert("AI Mode: " + (AI_MODE ? "Açık (API key eklersen kullanılır)" : "Kapalı (tamamen ücretsiz local analiz)"));
+    }
+
     /*
-    // İLERİ SEVİYE (İSTEĞE BAĞLI, ÜCRETSİZ DEĞİL):
-
     // Gerçek OpenAI / ChatGPT entegrasyonu yapmak istersen,
-    // bu fonksiyonu düzenleyip API key'ini ekleyebilirsin.
-    // ÖNEMLİ: Frontend'de key saklamak güvenli değildir;
-    // sadece kendi kullanımın için deneme amaçlı kullan.
+    // bu fonksiyonu düzenleyip kendi API key'ini ekle.
+    // UYARI: Frontend'de key saklamak güvenli değildir; kişisel kullanım içindir.
 
-    async function askRealAI(prompt) {
-        const apiKey = "BURAYA_API_KEY"; // kendi key'in
+    async function askOpenAI(prompt) {
+        if (!AI_MODE) {
+            return "AI modu kapalı, local kurallı analiz kullanılıyor.";
+        }
+
+        const apiKey = "BURAYA_KENDİ_API_KEYİNİ_YAZ"; // kendi anahtarın
+
         const res = await fetch("https://api.openai.com/v1/chat/completions", {
             method: "POST",
             headers: {
@@ -1349,47 +1598,11 @@
                 ]
             })
         });
+
         const data = await res.json();
         return data.choices[0].message.content;
     }
     */
 </script>
-    function runCompetitor() {
-    const store = (document.getElementById("cs-store").value || "").trim();
-    const type = document.getElementById("cs-type").value;
-
-    if (!store) {
-        alert("Kanka rakip mağaza adını girmeden analiz yapamam :)");
-        return;
-    }
-
-    let score = 60;
-
-    if (type === "Genel Dropshipping") score += 5;
-    if (type === "Niş Mağaza") score += 15;
-    if (type === "Brand/Markalı") score += 10;
-
-    let risk = "Orta";
-    if (score > 80) risk = "Düşük";
-    if (score < 50) risk = "Yüksek";
-
-    const analysis = `
-        <div class="analysis-box">
-            <div class="analysis-header">Mağaza İncelemesi</div>
-            • Rakip: ${store}  
-            • Mağaza türü: ${type}  
-            • Tahmini rekabet skoru: ${score}/100 (${risk} risk)
-            <br><br>
-            <strong>Mini Yorum:</strong>
-            • Bu mağaza büyük ihtimalle haftada 3–5 ürün ekleyen aktif bir mağaza.  
-            • Satışları muhtemelen 15–60 adet/ay arasıdır.  
-            • Fiyat optimizasyonu zayıf ise sen rahatça geçebilirsin.  
-            • Niş mağaza türü seçtiysen yüksek trend potansiyeli var.
-        </div>
-    `;
-
-    document.getElementById("cs-result").innerHTML = analysis;
-}
-
 </body>
 </html>
