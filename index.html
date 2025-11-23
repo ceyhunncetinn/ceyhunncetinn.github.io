@@ -1,194 +1,127 @@
+<script>
+const s = prompt("Giriş şifresi:");
+
+if (s === "ceyhunkral") {
+    localStorage.setItem("ceyhun_auth", "ok");
+    window.location.href = "index.html";
+} else {
+    alert("Yanlış şifre!");
+    window.location.href = "about:blank";
+}
+</script>
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ceyhun PRO • Drop Analyzer</title>
-
-<!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: 'Inter', sans-serif;
-        background: #0d1117;
-        color: #fff;
-    }
-    .container {
-        max-width: 900px;
-        margin: auto;
-        padding: 20px;
-    }
-    h1 {
-        font-size: 32px;
-        font-weight: 700;
-        text-align: center;
-        letter-spacing: 1px;
-    }
-    .pro {
-        color: #ffcc00;
-    }
-    .desc {
-        text-align: center;
-        font-size: 15px;
-        opacity: .8;
-        margin-bottom: 25px;
-    }
-    .card {
-        background: #161b22;
-        padding: 20px;
-        border-radius: 12px;
-        margin-bottom: 20px;
-        box-shadow: 0 0 20px #0004;
-    }
-    h2 {
-        margin-top: 0;
-        font-size: 22px;
-    }
-    textarea {
-        width: 100%;
-        height: 110px;
-        padding: 12px;
-        border-radius: 10px;
-        border: none;
-        outline: none;
-        margin-bottom: 15px;
-        font-size: 15px;
-        resize: none;
-        background: #0d1117;
-        color: #fff;
-    }
-    .row {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-    }
-    .row div {
-        flex: 1;
-    }
-    input {
-        width: 100%;
-        padding: 10px;
-        border-radius: 10px;
-        border: none;
-        background: #0d1117;
-        color: #fff;
-        outline: none;
-        font-size: 15px;
-    }
-    button {
-        padding: 12px 20px;
-        background: #ffcc00;
-        color: #000;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        margin-right: 10px;
-    }
-    .secondary {
-        background: #444;
-        color: #fff;
-    }
-    .result {
-        background: #161b22;
-        padding: 20px;
-        border-radius: 12px;
-        font-size: 16px;
-        white-space: pre-line;
-        box-shadow: 0 0 20px #0004;
-    }
+body {
+  background: #0d1117;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+.panel {
+  background: #161b22;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 650px;
+  margin: auto;
+  border: 1px solid #30363d;
+}
+h1 {
+  color: #f1c40f;
+  text-align: center;
+}
+label { font-weight: bold; }
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  color: white;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #f39c12;
+  color: #000;
+  font-weight: bold;
+  font-size: 16px;
+}
+.result {
+  background: #11161d;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+  border: 1px solid #30363d;
+}
 </style>
-
 </head>
 <body>
 
-<div class="container">
-    <h1>CEYHUN <span class="pro">PRO</span> • Drop Analyzer</h1>
+<div class="panel">
+  <h1>CEYHUN PRO • Drop Analyzer V8</h1>
 
-    <p class="desc">
-        Ürün adını veya linkini yaz → maliyet & fiyat gir → kâr, tedarikçi önerisi ve ürün skorunu hesaplayayım.
-    </p>
+  <label>Ürün adı veya link</label>
+  <textarea id="urun" placeholder="Örn: 300x Air Fryer Liners non-stick UK stock"></textarea>
 
-    <div class="card">
-        <h2>Ürün Bilgisi</h2>
-        <textarea id="productInput" placeholder="Ürün adı veya ürün linki..."></textarea>
+  <label>Ürün maliyeti (£)</label>
+  <input id="maliyet" type="number" step="0.01" placeholder="Örn: 3.50">
 
-        <div class="row">
-            <div>
-                <label>Ürün maliyeti (£)</label>
-                <input id="cost" type="number" step="0.01" placeholder="3.50" />
-            </div>
-            <div>
-                <label>Kargo (£)</label>
-                <input id="shipping" type="number" step="0.01" placeholder="2.00" />
-            </div>
-        </div>
+  <label>Kargo maliyeti (£)</label>
+  <input id="kargo" type="number" step="0.01" placeholder="Örn: 2.00">
 
-        <div class="row">
-            <div>
-                <label>eBay ücreti (%)</label>
-                <input id="fee" type="number" step="0.1" placeholder="13" />
-            </div>
-            <div>
-                <label>Satış fiyatı (£)</label>
-                <input id="price" type="number" step="0.01" placeholder="9.99" />
-            </div>
-        </div>
+  <label>eBay ücreti (%)</label>
+  <input id="ebay" type="number" step="0.01" placeholder="Örn: 13">
 
-        <button id="analyzeBtn">ANALİZ ET</button>
-        <button id="clearBtn" class="secondary">TEMİZLE</button>
-    </div>
+  <label>Satış fiyatı (£)</label>
+  <input id="satis" type="number" step="0.01" placeholder="Örn: 9.99">
 
-    <div id="resultBox" class="result">
-        Henüz analiz yapılmadı. “Analiz Et” tuşuna bas.
-    </div>
+  <button onclick="analyze()">ANALİZ ET</button>
+
+  <div id="sonuc" class="result">Henüz analiz yapılmadı.</div>
 </div>
 
-
 <script>
-document.getElementById("analyzeBtn").addEventListener("click", () => {
-    let name = document.getElementById("productInput").value.trim();
-    let cost = parseFloat(document.getElementById("cost").value) || 0;
-    let ship = parseFloat(document.getElementById("shipping").value) || 0;
-    let price = parseFloat(document.getElementById("price").value) || 0;
-    let fee = parseFloat(document.getElementById("fee").value) || 0;
+function analyze() {
+  let urun = document.getElementById("urun").value;
+  let maliyet = Number(document.getElementById("maliyet").value);
+  let kargo = Number(document.getElementById("kargo").value);
+  let ebay = Number(document.getElementById("ebay").value);
+  let satis = Number(document.getElementById("satis").value);
 
-    let totalCost = cost + ship;
-    let ebayFeeAmount = (price * fee) / 100;
-    let profit = price - totalCost - ebayFeeAmount;
+  if (!urun) {
+    document.getElementById("sonuc").innerHTML =
+      "Lütfen ürün adı veya link gir kankacım.";
+    return;
+  }
 
-    let score = 50;
-    if (profit > 4) score += 20;
-    if (profit > 6) score += 20;
-    if (name.toLowerCase().includes("air fryer")) score += 10;
+  let toplamMaliyet = maliyet + kargo;
+  let ebayKesinti = (satis * ebay) / 100;
+  let netKar = satis - toplamMaliyet - ebayKesinti;
 
-    let supplier = "CJdropshipping önerilir (UK warehouse bulursan).";
-    if (totalCost < 3) supplier = "Avasam UK NET tedarikçiler uygun olabilir.";
-    if (name.toLowerCase().includes("liner")) supplier = "Amazon → eBay DS yapılabilir.";
+  let tedarikci =
+    maliyet < 3 ? "CJdropshipping" :
+    maliyet < 5 ? "Temu" :
+    maliyet < 8 ? "AliExpress" :
+    "Diğer tedarikçiler";
 
-    document.getElementById("resultBox").innerHTML =
-        `📌 *ÜRÜN ANALİZİ*\n` +
-        `Ürün: ${name || "—"}\n\n` +
-        `Toplam maliyet: £${totalCost.toFixed(2)}\n` +
-        `eBay ücreti: £${ebayFeeAmount.toFixed(2)}\n` +
-        `Kâr: £${profit.toFixed(2)}\n\n` +
-        `⭐ Ürün Skoru: ${score}/100\n` +
-        `🔍 Tedarikçi Önerisi: ${supplier}`;
-});
-
-document.getElementById("clearBtn").addEventListener("click", () => {
-    document.getElementById("productInput").value = "";
-    document.getElementById("cost").value = "";
-    document.getElementById("shipping").value = "";
-    document.getElementById("fee").value = "";
-    document.getElementById("price").value = "";
-    document.getElementById("resultBox").innerHTML =
-        "Henüz analiz yapılmadı. ‘Analiz Et’ tuşuna bas.";
-});
+  document.getElementById("sonuc").innerHTML = `
+    <b>Ürün:</b> ${urun}<br><br>
+    <b>Tedarikçi Önerisi:</b> ${tedarikci}<br><br>
+    <b>Toplam Maliyet:</b> £${toplamMaliyet.toFixed(2)}<br>
+    <b>eBay Kesinti:</b> £${ebayKesinti.toFixed(2)}<br>
+    <b>Net Kar:</b> £${netKar.toFixed(2)}<br><br>
+    ${netKar > 1 ? "🔥 Bu ürün mantıklı kankacım." : "❌ Çok düşük kar, gerek yok kanka."}
+  `;
+}
 </script>
 
 </body>
