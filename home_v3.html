@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ceyhun xGPT Tools v3 – Dropshipping Suite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --bg-main: #020617;
+            --bg-card: #020617;
+            --bg-elevated: #020617;
+            --accent-gold: #facc15;
+            --accent-gold-soft: rgba(250, 204, 21, 0.16);
+            --accent-green: #22c55e;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-subtle: #1f2937;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #020617 0, #020617 55%, #000000 100%);
+            color: var(--text-main);
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .layout {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            background: #020617;
+            border-right: 1px solid var(--border-subtle);
+            padding: 10px 10px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+        }
+
+        .brand-box {
+            padding: 10px 12px;
+            border-radius: 16px;
+            background: radial-gradient(circle at top left, rgba(250, 204, 21, 0.24), transparent 55%);
+            border: 1px solid rgba(250, 204, 21, 0.6);
+            margin-bottom: 4px;
+        }
+
+        .brand-title {
+            font-size: 14px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+
+        .brand-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .nav-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: var(--text-muted);
+            margin: 6px 2px 4px;
+        }
+
+        .nav-btn {
+            all: unset;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--text-muted);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(30, 64, 175, 0.1);
+            margin-bottom: 4px;
+        }
+
+        .nav-btn span.icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            border-color: rgba(148, 163, 184, 0.6);
+        }
+
+        .nav-btn.active-btn {
+            background: radial-gradient(circle at left, rgba(250, 204, 21, 0.2), rgba(15, 23, 42, 0.96));
+            color: var(--text-main);
+            border-color: rgba(250, 204, 21, 0.7);
+        }
+
+        .nav-pill {
+            margin-left: auto;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            color: var(--text-muted);
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            font-size: 11px;
+            color: var(--text-muted);
+            border-top: 1px dashed rgba(55, 65, 81, 0.9);
+            padding-top: 8px;
+        }
+
+        .ai-toggle-btn {
+            margin-top: 4px;
+        }
+
+        .ai-status-pill {
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            padding: 1px 6px;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+
+        /* MAIN */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 12px 16px 18px;
+            overflow: hidden;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .top-left {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .top-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .top-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .top-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .chip {
+            font-size: 11px;
+            padding: 2px 9px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            color: var(--text-muted);
+        }
+
+        .chip.gold {
+            border-color: rgba(250, 204, 21, 0.9);
+            color: #fef9c3;
+            background: var(--accent-gold-soft);
+        }
+
+        .chip.green {
+            border-color: rgba(34, 197, 94, 0.9);
+            color: #bbf7d0;
+            background: rgba(21, 128, 61, 0.22);
+        }
+
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .panel {
+            display: none;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        .panel.active-panel {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+            gap: 12px;
+        }
+
+        @media (max-width: 960px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: linear-gradient(to bottom right, rgba(15, 23, 42, 0.98), #020617);
+            border-radius: 16px;
+            border: 1px solid rgba(31, 41, 55, 0.95);
+            padding: 14px 14px 12px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card-sub {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .badge-soft {
+            font-size: 10px;
+            border-radius: 999px;
+            padding: 2px 8px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            color: var(--text-muted);
+        }
+
+        .badge-soft.gold {
+            border-color: rgba(250, 204, 21, 0.9);
+            color: #fef9c3;
+        }
+
+        .badge-soft.green {
+            border-color: rgba(34, 197, 94, 0.9);
+            color: #bbf7d0;
+        }
+
+        label {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 7px 9px;
+            border-radius: 10px;
+            border: 1px solid rgba(55, 65, 81, 0.95);
+            background: rgba(15, 23, 42, 0.96);
+            color: var(--text-main);
+            font-size: 12px;
+            outline: none;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 1px rgba(250, 204, 21, 0.3);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .btn {
+            all: unset;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #facc15, #eab308);
+            color: #022c22;
+            font-weight: 600;
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(148, 163, 184, 0.7);
+            color: var(--text-muted);
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .metric {
+            padding: 8px 9px;
+            border-radius: 12px;
+            background: rgba(15, 23, 42, 0.96);
+            border: 1px solid rgba(31, 41, 55, 0.95);
+        }
+
+        .metric-label {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .metric-value {
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .metric-pill {
+            font-size: 10px;
+            border-radius: 999px;
+            padding: 1px 7px;
+            margin-top: 3px;
+            display: inline-block;
+        }
+
+        .metric-pill.gold {
+            background: var(--accent-gold-soft);
+            color: #fef9c3;
+        }
+
+        .metric-pill.green {
+            background: rgba(34, 197, 94, 0.14);
+            color: #bbf7d0;
+        }
+
+        .metric-pill.red {
+            background: rgba(248, 113, 113, 0.16);
+            color: #fecaca;
+        }
+
+        .analysis-box {
+            margin-top: 8px;
+            padding: 8px 9px;
+            border-radius: 12px;
+            border: 1px dashed rgba(75, 85, 99, 0.9);
+            background: radial-gradient(circle at top left, rgba(30, 64, 175, 0.5), rgba(15, 23, 42, 0.98));
+            font-size: 12px;
+            color: #e5e7eb;
+        }
+
+        .analysis-header {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            color: #bfdbfe;
+            margin-bottom: 3px;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .tag {
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.6);
+            color: var(--text-muted);
+        }
+
+        .tag.green {
+            border-color: rgba(34, 197, 94, 0.9);
+            color: #bbf7d0;
+        }
+
+        .tag.red {
+            border-color: rgba(248, 113, 113, 0.9);
+            color: #fecaca;
+        }
+
+        .tag.gold {
+            border-color: rgba(250, 204, 21, 0.9);
+            color: #fef9c3;
+        }
+
+        .mini-thumb {
+            width: 100%;
+            height: 110px;
+            border-radius: 12px;
+            background: radial-gradient(circle at top left, rgba(250, 204, 21, 0.18), rgba(15, 23, 42, 0.98));
+            border: 1px solid rgba(148, 163, 184, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 6px;
+        }
+
+        .small-note {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        ul.compact {
+            margin: 4px 0;
+            padding-left: 18px;
+            font-size: 12px;
+        }
+
+        ul.compact li { margin-bottom: 3px; }
+
+        /* PRINT (PDF) – sadece Mini AI paneli */
+        @media print {
+            body, html {
+                margin: 0;
+                padding: 0;
+                background: #ffffff;
+                color: #000000;
+                height: auto;
+                overflow: visible;
+            }
+            .sidebar, .topbar {
+                display: none !important;
+            }
+            .panel {
+                display: none !important;
+            }
+            .panel.print-active {
+                display: block !important;
+            }
+            .card {
+                border-radius: 0;
+                border: none;
+                background: #ffffff;
+                color: #000000;
+            }
+            .analysis-box {
+                background: #f9fafb;
+                border-color: #cbd5f5;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                overflow-x: auto;
+                overflow-y: visible;
+            }
+            .nav-btn {
+                min-width: 220px;
+                flex-shrink: 0;
+            }
+            .main {
+                padding: 10px 10px 14px;
+                height: calc(100vh - 90px);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand-box">
+            <div class="brand-title">Ceyhun xGPT • v3</div>
+            <div class="brand-sub">Black & Gold Dropshipping Suite • GitHub Pages</div>
+        </div>
+
+        <div class="nav-label">Paneller</div>
+        <button class="nav-btn" data-target="panel-mini-ai">
+            <span class="icon">🔗</span>
+            Mini AI Link Analiz
+            <span class="nav-pill">V3</span>
+        </button>
+        <button class="nav-btn" data-target="panel-drop">
+            <span class="icon">📦</span>
+            Drop Analyzer
+            <span class="nav-pill">Manuel</span>
+        </button>
+        <button class="nav-btn" data-target="panel-product">
+            <span class="icon">🛒</span>
+            Product Finder
+        </button>
+        <button class="nav-btn" data-target="panel-profit">
+            <span class="icon">💰</span>
+            Profit Calculator
+        </button>
+        <button class="nav-btn" data-target="panel-trend">
+            <span class="icon">📈</span>
+            Trend Explorer
+        </button>
+        <button class="nav-btn" data-target="panel-competitor">
+            <span class="icon">🏪</span>
+            Rakip Analizi
+        </button>
+        <button class="nav-btn" data-target="panel-seo">
+            <span class="icon">📝</span>
+            eBay SEO
+        </button>
+        <button class="nav-btn" data-target="panel-auto-cat">
+            <span class="icon">🧠</span>
+            Auto Category
+        </button>
+        <button class="nav-btn" data-target="panel-revenue">
+            <span class="icon">💸</span>
+            Ciro Tahmini
+        </button>
+
+        <button class="nav-btn ai-toggle-btn" onclick="toggleAI()">
+            <span class="icon">🤖</span>
+            AI Mode
+            <span class="ai-status-pill" id="ai-status">Kapalı</span>
+        </button>
+
+        <div class="sidebar-footer">
+            Local Mini AI aktif.  
+            İleride OpenAI API key ekleyerek “gerçek ChatGPT” moduna alınabilir.
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+        <div class="topbar">
+            <div class="top-left">
+                <div class="top-title">Ceyhun xGPT Tools v3</div>
+                <div class="top-sub">eBay dropshipping için ücretsiz, yerel Mini AI destekli analiz paneli.</div>
+            </div>
+            <div class="top-tags">
+                <div class="chip gold">Black & Gold UI</div>
+                <div class="chip green">Ücretsiz • Local motor</div>
+                <div class="chip">GitHub Pages • Mobile Ready</div>
+            </div>
+        </div>
+
+        <div class="content-scroll">
+            <!-- MINI AI LINK ANALYZER -->
+            <section class="panel" id="panel-mini-ai">
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div>
+                                <div class="card-title">🔗 Mini AI Link Analiz v3</div>
+                                <div class="card-sub">Sadece eBay linkini gir → ürün özeti, fiyat & kâr, trend & rekabet, tedarikçi önerisi al.</div>
+                            </div>
+                            <span class="badge-soft gold">Ücretsiz Mini AI</span>
+                        </div>
+
+                        <label>eBay Ürün Linki</label>
+                        <input id="mini-link" placeholder="https://www.ebay.co.uk/itm/...">
+                        <div class="small-note">
+                            Not: Bu sistem gerçek scraping yapmaz; URL’den ürün tipini okuyup tahmini analiz üretir. Tamamen local ve ücretsizdir.
+                        </div>
+
+                        <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+                            <button class="btn btn-primary" onclick="runMiniAI()">🧠 Mini AI Analiz Çalıştır</button>
+                            <button class="btn btn-outline" onclick="printMiniReport()">📄 Raporu Yazdır / PDF</button>
+                        </div>
+
+                        <div id="mini-main" style="margin-top:10px;display:none;">
+                            <div class="metrics-row">
+                                <div class="metric">
+                                    <div class="metric-label">Tahmini Platform</div>
+                                    <div class="metric-value" id="mini-platform"></div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Tahmini Kategori</div>
+                                    <div class="metric-value" id="mini-category"></div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Drop Skoru</div>
+                                    <div class="metric-value" id="mini-drop-score"></div>
+                                    <span class="metric-pill gold" id="mini-drop-pill"></span>
+                                </div>
+                            </div>
+
+                            <div class="analysis-box" style="margin-top:10px;">
+                                <div class="analysis-header">Genel Yorum</div>
+                                <div id="mini-summary"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="mini-report-cards">
+                        <div class="card">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">🟩 Ürün Özeti</div>
+                                    <div class="card-sub">URL slug üzerinden çözümlenen temel bilgiler.</div>
+                                </div>
+                            </div>
+                            <div class="mini-thumb" id="mini-thumb">
+                                Ürün görsel önizlemesi (temsili)  
+                                <div style="font-size:10px;margin-top:2px;">
+                                    Tam scraping için ayrı backend gerekir; bu sürümde Mini AI sadece başlık/slug üzerinden yorum yapar.
+                                </div>
+                            </div>
+                            <div class="analysis-box" style="margin-top:8px;">
+                                <div class="analysis-header">Başlık & Niş</div>
+                                <div id="mini-title-block"></div>
+                                <div class="tag-row" id="mini-tags"></div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top:10px;">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">🟨 Fiyat & Kâr Tahmini</div>
+                                    <div class="card-sub">Mini AI modeline göre satış fiyatı, maliyet ve kâr marjı.</div>
+                                </div>
+                            </div>
+                            <div class="metrics-row">
+                                <div class="metric">
+                                    <div class="metric-label">Satış Fiyat Aralığı</div>
+                                    <div class="metric-value" id="mini-price-range"></div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Tahmini Maliyet</div>
+                                    <div class="metric-value" id="mini-cost"></div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Tahmini Kâr</div>
+                                    <div class="metric-value" id="mini-profit"></div>
+                                    <span class="metric-pill" id="mini-profit-pill"></span>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Kâr Marjı</div>
+                                    <div class="metric-value" id="mini-margin"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top:10px;">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">🟥 Trend & Rekabet</div>
+                                    <div class="card-sub">Trend skoru, rekabet seviyesi ve test önerisi.</div>
+                                </div>
+                            </div>
+                            <div class="metrics-row">
+                                <div class="metric">
+                                    <div class="metric-label">Trend Skoru</div>
+                                    <div class="metric-value" id="mini-trend"></div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Rekabet Seviyesi</div>
+                                    <div class="metric-value" id="mini-competition"></div>
+                                </div>
+                                <div class="metric">
+                                    <div class="metric-label">Aylık Tahmini Satış</div>
+                                    <div class="metric-value" id="mini-monthly-sales"></div>
+                                </div>
+                            </div>
+                            <div class="analysis-box" style="margin-top:8px;">
+                                <div class="analysis-header">Test Önerisi</div>
+                                <div id="mini-test-comment"></div>
+                            </div>
+                        </div>
+
+                        <div class="card" style="margin-top:10px;">
+                            <div class="card-header">
+                                <div>
+                                    <div class="card-title">🌐 Tedarikçi Önerisi (Mini AI)</div>
+                                    <div class="card-sub">CJ, Avasam, AliExpress ve Temu için hangi kelimelerle arama yapılabilir?</div>
+                                </div>
+                            </div>
+                            <div id="mini-supplier"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DROP ANALYZER -->
+            <section class="panel" id="panel-drop">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">📦 Drop Analyzer (Manuel)</div>
+                            <div class="card-sub">Alış + satış + ürün başlığına göre klasik kâr ve skor analizi.</div>
+                        </div>
+                        <span class="badge-soft green">Manuel Mod</span>
+                    </div>
+
+                    <label>Ürün Başlığı</label>
+                    <textarea id="da-title" placeholder="Örn: Stainless Steel Kitchen Organizer Rack, 3 Tier"></textarea>
+
+                    <div class="form-row" style="margin-top:4px;">
+                        <div>
+                            <label>Tedarikçi Alış (£)</label>
+                            <input id="da-cost" type="number" step="0.01">
+                        </div>
+                        <div>
+                            <label>eBay Satış (£)</label>
+                            <input id="da-sell" type="number" step="0.01">
+                        </div>
+                        <div>
+                            <label>Aylık Tahmini Satış Adedi</label>
+                            <input id="da-sales" type="number" step="1">
+                        </div>
+                    </div>
+
+                    <label>Rekabet Seviyesi</label>
+                    <select id="da-competition">
+                        <option value="medium">Orta</option>
+                        <option value="low">Düşük</option>
+                        <option value="high">Yüksek</option>
+                    </select>
+
+                    <button class="btn btn-primary" onclick="runDropAnalyzer()">⚡ Analiz Et</button>
+
+                    <div id="da-result"></div>
+                </div>
+            </section>
+
+            <!-- PRODUCT FINDER -->
+            <section class="panel" id="panel-product">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">🛒 Product Finder</div>
+                            <div class="card-sub">Anahtar kelimeye göre mantıklı ürün fikirleri (set, bundle, kit) üretir.</div>
+                        </div>
+                    </div>
+
+                    <label>Anahtar Kelime / Niş</label>
+                    <input id="pf-keyword" placeholder="Örn: kitchen organizer, pet grooming, car interior">
+
+                    <button class="btn btn-primary" onclick="runProductFinder()">🔎 Ürün Fikirleri Üret</button>
+
+                    <div id="pf-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
+
+            <!-- PROFIT CALCULATOR -->
+            <section class="panel" id="panel-profit">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">💰 Profit Calculator</div>
+                            <div class="card-sub">eBay + ödeme kesintilerini dahil ederek net kârı hesaplar.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div>
+                            <label>Alış (£)</label>
+                            <input id="pc-cost" type="number" step="0.01">
+                        </div>
+                        <div>
+                            <label>Satış (£)</label>
+                            <input id="pc-sell" type="number" step="0.01">
+                        </div>
+                        <div>
+                            <label>Kargo Maliyeti (£)</label>
+                            <input id="pc-ship" type="number" step="0.01">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="runProfitCalc()">💸 Kârı Hesapla</button>
+
+                    <div id="pc-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
+
+            <!-- TREND EXPLORER -->
+            <section class="panel" id="panel-trend">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">📈 Trend Explorer</div>
+                            <div class="card-sub">Kategori / kelime bazlı basit trend skoru.</div>
+                        </div>
+                    </div>
+
+                    <label>Kelime / Kategori</label>
+                    <input id="tr-keyword" placeholder="Örn: home office, pet grooming, gym equipment">
+
+                    <button class="btn btn-primary" onclick="runTrend()">Trend Analizi Çalıştır</button>
+
+                    <div id="tr-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
+
+            <!-- RAKİP ANALİZİ -->
+            <section class="panel" id="panel-competitor">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">🏪 Rakip Mağaza Analizi</div>
+                            <div class="card-sub">Mağaza adından tahmini rekabet skoru üretir.</div>
+                        </div>
+                    </div>
+
+                    <label>Rakip eBay Mağaza Adı</label>
+                    <input id="cs-store" placeholder="Örn: best_home_store_uk">
+
+                    <button class="btn btn-primary" onclick="runCompetitor()">🧠 Rakip Analizi Çalıştır</button>
+
+                    <div id="cs-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
+
+            <!-- SEO -->
+            <section class="panel" id="panel-seo">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">📝 eBay SEO Optimizer</div>
+                            <div class="card-sub">Başlık uzunluğu, kelime yapısı ve ek öneriler.</div>
+                        </div>
+                    </div>
+
+                    <label>Mevcut Başlık</label>
+                    <textarea id="seo-title" placeholder="Örn: Stainless Steel Kitchen Organizer Rack, 3 Tier"></textarea>
+
+                    <button class="btn btn-primary" onclick="runSEO()">🔍 SEO Analizi</button>
+
+                    <div id="seo-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
+
+            <!-- AUTO CATEGORY -->
+            <section class="panel" id="panel-auto-cat">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">🧠 Auto Category AI</div>
+                            <div class="card-sub">Başlıktan tahmini eBay kategorisi.</div>
+                        </div>
+                    </div>
+
+                    <label>Ürün Başlığı</label>
+                    <textarea id="cat-title"></textarea>
+
+                    <button class="btn btn-primary" onclick="runAutoCat()">Kategori Bul</button>
+
+                    <div id="cat-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
+
+            <!-- CİRO TAHMİNİ -->
+            <section class="panel" id="panel-revenue">
+                <div class="card">
+                    <div class="card-header">
+                        <div>
+                            <div class="card-title">💸 Mağaza Ciro Tahmini</div>
+                            <div class="card-sub">Ürün sayısı + günlük satış + ortalama fiyata göre.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div>
+                            <label>Toplam Ürün Sayısı</label>
+                            <input id="rev-prod" type="number">
+                        </div>
+                        <div>
+                            <label>Günlük Satış Adedi</label>
+                            <input id="rev-daily" type="number">
+                        </div>
+                        <div>
+                            <label>Ortalama Fiyat (£)</label>
+                            <input id="rev-price" type="number" step="0.01">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="runRevenue()">📊 Ciro Hesapla</button>
+
+                    <div id="rev-result" style="margin-top:10px;"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+</div>
+
+<script>
+    let AI_MODE = false;
+
+    function clamp(v, min, max) {
+        return Math.min(Math.max(v, min), max);
+    }
+
+    function toMoney(n) {
+        if (isNaN(n)) return "£0.00";
+        return "£" + n.toFixed(2);
+    }
+
+    // NAV & PANELS
+    const navButtons = document.querySelectorAll('.nav-btn[data-target]');
+    const panels = document.querySelectorAll('.panel');
+
+    function showPanel(id) {
+        panels.forEach(p => p.classList.remove('active-panel'));
+        const target = document.getElementById(id);
+        if (target) target.classList.add('active-panel');
+
+        navButtons.forEach(btn => {
+            const t = btn.getAttribute('data-target');
+            btn.classList.toggle('active-btn', t === id);
+        });
+    }
+
+    if (navButtons.length > 0) {
+        const firstTarget = navButtons[0].getAttribute('data-target');
+        showPanel(firstTarget);
+    }
+
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const id = btn.getAttribute('data-target');
+            if (id) showPanel(id);
+        });
+    });
+
+    // MINI AI LINK ANALIZ V3
+    function runMiniAI() {
+        const input = (document.getElementById('mini-link').value || "").trim();
+        if (!input) {
+            alert("Kanka, önce eBay linkini yapıştıralım :)");
+            return;
+        }
+
+        let host = "";
+        let path = "";
+        try {
+            const u = new URL(input);
+            host = u.hostname || "";
+            path = u.pathname || "";
+        } catch (e) {
+            const parts = input.split("/");
+            host = parts[2] || "";
+            path = input.replace(host, "");
+        }
+
+        let platform = "Bilinmiyor";
+        if (host.includes("ebay.co.uk")) platform = "eBay UK";
+        else if (host.includes("ebay.com")) platform = "eBay US";
+        else if (host.includes("ebay")) platform = "eBay";
+
+        let slug = path.split("/").pop() || "";
+        slug = slug.split("?")[0];
+        slug = decodeURIComponent(slug);
+        slug = slug.replace(/[-_]/g, " ");
+        const rawWords = slug.split(/\s+/).filter(Boolean);
+        const words = rawWords.filter(w =>
+            !/^\d+$/.test(w) &&
+            !["itm","dp","gp","pp","item"].includes(w.toLowerCase())
+        );
+
+        const titleGuess = words.length ? words.join(" ") : "Genel ürün (slug çözülemedi)";
+
+        const lowTitle = titleGuess.toLowerCase();
+        let category = "Genel";
+        if (lowTitle.includes("dog") || lowTitle.includes("cat") || lowTitle.includes("pet"))
+            category = "Pet Supplies";
+        else if (lowTitle.includes("kitchen") || lowTitle.includes("rack") || lowTitle.includes("organizer") || lowTitle.includes("storage"))
+            category = "Home & Kitchen";
+        else if (lowTitle.includes("car") || lowTitle.includes("auto") || lowTitle.includes("vehicle"))
+            category = "Car Accessories";
+        else if (lowTitle.includes("phone") || lowTitle.includes("case") || lowTitle.includes("iphone") || lowTitle.includes("samsung"))
+            category = "Mobile Accessories";
+        else if (lowTitle.includes("toy") || lowTitle.includes("kids") || lowTitle.includes("baby"))
+            category = "Toys & Kids";
+        else if (lowTitle.includes("lamp") || lowTitle.includes("light") || lowTitle.includes("led"))
+            category = "Lighting";
+        else if (lowTitle.includes("gym") || lowTitle.includes("fitness") || lowTitle.includes("workout"))
+            category = "Sports & Fitness";
+
+        // fiyat modeli v3
+        let basePrice = 19.99;
+        if (category === "Pet Supplies") basePrice = 14.99;
+        if (category === "Home & Kitchen") basePrice = 18.49;
+        if (category === "Car Accessories") basePrice = 16.49;
+        if (category === "Mobile Accessories") basePrice = 9.99;
+        if (category === "Toys & Kids") basePrice = 13.99;
+        if (category === "Lighting") basePrice = 18.99;
+        if (category === "Sports & Fitness") basePrice = 21.99;
+
+        if (lowTitle.includes("set") || lowTitle.includes("pack") || lowTitle.includes("bundle")) basePrice += 3;
+        if (lowTitle.includes("pro") || lowTitle.includes("premium")) basePrice += 4;
+        if (lowTitle.includes("mini") || lowTitle.includes("small")) basePrice -= 2;
+
+        const minPrice = basePrice - 3;
+        const maxPrice = basePrice + 4;
+
+        let costFactor = 0.6;
+        if (category === "Mobile Accessories") costFactor = 0.4;
+        if (category === "Pet Supplies") costFactor = 0.55;
+        const supplierCost = basePrice * costFactor;
+
+        const fees = basePrice * 0.15;
+        const estProfit = basePrice - supplierCost - fees;
+        const marginPct = (estProfit / basePrice) * 100;
+
+        let trendScore = 55;
+        if (category === "Pet Supplies" || category === "Home & Kitchen") trendScore += 12;
+        if (category === "Sports & Fitness") trendScore += 10;
+        if (category === "Mobile Accessories") trendScore -= 6;
+
+        if (lowTitle.includes("2024") || lowTitle.includes("2025") || lowTitle.includes("new")) trendScore += 5;
+        if (lowTitle.includes("christmas") || lowTitle.includes("xmas") || lowTitle.includes("gift")) trendScore += 4;
+
+        trendScore = clamp(trendScore, 20, 95);
+
+        let competition = "Orta";
+        if (category === "Mobile Accessories") competition = "Yüksek";
+        else if (category === "Pet Supplies" || category === "Home & Kitchen") competition = "Orta";
+        else competition = "Orta-Yüksek";
+
+        let dropScore = trendScore;
+        if (marginPct > 30) dropScore += 8;
+        else if (marginPct < 20) dropScore -= 5;
+        if (competition === "Yüksek") dropScore -= 7;
+        dropScore = clamp(dropScore, 10, 98);
+
+        let risk = "Orta";
+        if (dropScore >= 75) risk = "Düşük";
+        else if (dropScore <= 45) risk = "Yüksek";
+
+        let monthlySales = 20;
+        if (trendScore >= 70) monthlySales = 35;
+        if (trendScore >= 80) monthlySales = 50;
+        if (trendScore <= 40) monthlySales = 10;
+
+        // Ana özet
+        document.getElementById('mini-main').style.display = 'block';
+        document.getElementById('mini-platform').textContent = platform;
+        document.getElementById('mini-category').textContent = category;
+        document.getElementById('mini-drop-score').textContent = dropScore.toFixed(0) + "/100";
+
+        const dropPill = document.getElementById('mini-drop-pill');
+        dropPill.textContent = risk === "Düşük" ? "Girmeye uygun (tahmini)" : (risk === "Yüksek" ? "Riskli ürün" : "Test edilebilir");
+        dropPill.className = "metric-pill gold";
+        if (risk === "Yüksek") dropPill.classList.add("red");
+        if (risk === "Düşük") dropPill.classList.add("green");
+
+        const summaryLines = [];
+        summaryLines.push(`• URL, Mini AI tarafından “${titleGuess.substring(0, 80)}${titleGuess.length > 80 ? "..." : ""}” gibi bir ürün olarak algılandı.`);
+        summaryLines.push(`• Kategori tahmini: ${category}.`);
+        summaryLines.push(`• Tahmini drop skoru: ${dropScore.toFixed(0)}/100 (${risk} risk).`);
+        summaryLines.push(`• Bu skor, trend + kâr marjı + rekabet tahminine göre hesaplandı.`);
+        document.getElementById('mini-summary').innerHTML = summaryLines.join("<br>");
+
+        // Ürün özeti kartı
+        document.getElementById('mini-title-block').innerHTML =
+            `• Tahmini başlık: <strong>${titleGuess}</strong><br>` +
+            `• URL host: ${host || "Bilinmiyor"}<br>` +
+            `• Kelime sayısı: ${words.length}`;
+
+        const tagsRow = document.getElementById('mini-tags');
+        tagsRow.innerHTML = "";
+        const addTag = (text, cls) => {
+            const span = document.createElement('span');
+            span.className = "tag " + (cls || "");
+            span.textContent = text;
+            tagsRow.appendChild(span);
+        };
+        if (category === "Pet Supplies") addTag("Pet nişi", "green");
+        if (category === "Home & Kitchen") addTag("Home & Kitchen", "green");
+        if (category === "Car Accessories") addTag("Car Accessories", "gold");
+        if (category === "Mobile Accessories") addTag("Mobile • Rekabet yüksek", "red");
+        if (dropScore >= 75) addTag("Girmeye değer (tahmini)", "green");
+        if (trendScore >= 70) addTag("Trend güçlü", "gold");
+        if (dropScore <= 45) addTag("Riskli ürün", "red");
+
+        // fiyat & kâr kartı
+        document.getElementById('mini-price-range').textContent =
+            "£" + minPrice.toFixed(2) + " – £" + maxPrice.toFixed(2);
+        document.getElementById('mini-cost').textContent = toMoney(supplierCost);
+        document.getElementById('mini-profit').textContent = toMoney(estProfit);
+        document.getElementById('mini-margin').textContent = marginPct.toFixed(1) + "%";
+
+        const profitPill = document.getElementById('mini-profit-pill');
+        profitPill.className = "metric-pill";
+        if (estProfit <= 0) {
+            profitPill.classList.add("red");
+            profitPill.textContent = "Zararda / başa baş (tahmini)";
+        } else if (marginPct < 15) {
+            profitPill.classList.add("red");
+            profitPill.textContent = "Düşük kâr (tahmini)";
+        } else if (marginPct < 30) {
+            profitPill.classList.add("gold");
+            profitPill.textContent = "Orta kâr (tahmini)";
+        } else {
+            profitPill.classList.add("green");
+            profitPill.textContent = "Güzel kâr (tahmini)";
+        }
+
+        // trend & rekabet kartı
+        document.getElementById('mini-trend').textContent = trendScore.toFixed(0) + "/100";
+        document.getElementById('mini-competition').textContent = competition;
+        document.getElementById('mini-monthly-sales').textContent = monthlySales + " adet/ay (tahmini)";
+
+        let testComment = "";
+        if (dropScore >= 80) {
+            testComment = "Bu ürün, Mini AI’e göre güçlü bir aday. Aynı nişte 3–5 ürünle birlikte koleksiyon şeklinde listelemek mantıklı.";
+        } else if (dropScore >= 60) {
+            testComment = "İlk test için fena değil. Düşük bütçeli bir test listelemesi yapıp sonuçlara göre karar verebilirsin.";
+        } else if (dropScore >= 45) {
+            testComment = "Orta riskli. Bunu ana ürün değil, yan ürün olarak kullanmak daha mantıklı olabilir.";
+        } else {
+            testComment = "Mini AI bu ürün için çok güçlü sinyal vermiyor. Daha sağlıklı nişlere (Pet, Home & Kitchen vb.) ağırlık verebilirsin.";
+        }
+        document.getElementById('mini-test-comment').textContent = testComment;
+
+        // tedarikçi önerisi
+        const sup = document.getElementById('mini-supplier');
+        sup.innerHTML = buildSupplierHints(words, category, basePrice);
+
+        // temsili görsel açıklaması
+        document.getElementById('mini-thumb').innerHTML =
+            "Ürün görseli (temsili blok).<br><span style='font-size:10px;color:#9ca3af;'>Ön yüz: " +
+            (titleGuess.substring(0, 40)) + (titleGuess.length > 40 ? "..." : "") +
+            "</span>";
+    }
+
+    function buildSupplierHints(words, category, basePrice) {
+        const coreKeyword = (words[0] || "product").toLowerCase();
+        const aliexpressRangeLow = (basePrice * 0.3).toFixed(2);
+        const aliexpressRangeHigh = (basePrice * 0.55).toFixed(2);
+
+        let cjKey = coreKeyword;
+        if (category === "Home & Kitchen") cjKey = coreKeyword + " organizer";
+        if (category === "Pet Supplies") cjKey = coreKeyword + " pet";
+        if (category === "Car Accessories") cjKey = coreKeyword + " car";
+        if (category === "Mobile Accessories") cjKey = coreKeyword + " phone";
+
+        let avasamCat = "General Home";
+        if (category === "Home & Kitchen") avasamCat = "Home & Garden";
+        if (category === "Pet Supplies") avasamCat = "Pet Supplies";
+        if (category === "Car Accessories") avasamCat = "Automotive";
+        if (category === "Mobile Accessories") avasamCat = "Consumer Electronics";
+
+        return `
+            <div class="analysis-box">
+                <div class="analysis-header">Tedarikçi Arama Önerileri</div>
+                <strong>CJ Dropshipping:</strong><br>
+                • Arama çubuğuna: <code>${cjKey}</code><br>
+                • Filtre: UK Warehouse + NET invoice (mümkünse)<br><br>
+
+                <strong>Avasam:</strong><br>
+                • Kategori: <code>${avasamCat}</code><br>
+                • Fiyat bandı: £${(basePrice * 0.4).toFixed(2)} – £${(basePrice * 0.7).toFixed(2)}<br><br>
+
+                <strong>AliExpress:</strong><br>
+                • Arama: <code>${coreKeyword}</code><br>
+                • Fiyat beklentisi: ~£${aliexpressRangeLow} – £${aliexpressRangeHigh}<br><br>
+
+                <strong>Temu / Diğer:</strong><br>
+                • Aynı kelime + “set / bundle” ekleyerek benzer ürünleri bulabilirsin.<br><br>
+
+                Not: Bunlar Mini AI tahminleridir. Gerçek tedarikçiyi seçerken; değerlendirme puanı, yorumlar, iade politikası ve kargo süresi mutlaka kontrol edilmeli.
+            </div>
+        `;
+    }
+
+    // PRINT / PDF (Mini AI paneli)
+    function printMiniReport() {
+        const panel = document.getElementById('panel-mini-ai');
+        panel.classList.add('print-active');
+        window.print();
+        setTimeout(() => {
+            panel.classList.remove('print-active');
+        }, 500);
+    }
+
+    // DROP ANALYZER (manuel)
+    function runDropAnalyzer() {
+        const title = (document.getElementById('da-title').value || "").trim();
+        const cost = parseFloat(document.getElementById('da-cost').value) || 0;
+        const sell = parseFloat(document.getElementById('da-sell').value) || 0;
+        const sales = parseInt(document.getElementById('da-sales').value) || 0;
+        const comp = document.getElementById('da-competition').value;
+        const out = document.getElementById('da-result');
+
+        if (!title || !cost || !sell) {
+            alert("Kanka, en azından başlık, alış ve satış fiyatını girmen lazım :)");
+            return;
+        }
+
+        const fees = sell * 0.15;
+        const profit = sell - cost - fees;
+        const margin = sell > 0 ? (profit / sell) * 100 : 0;
+        const monthlyProfit = profit * sales;
+
+        let score = 50;
+        if (margin > 30) score += 20;
+        else if (margin > 20) score += 10;
+        else if (margin < 10) score -= 15;
+
+        if (sales >= 30) score += 15;
+        else if (sales >= 15) score += 7;
+        else if (sales === 0) score -= 10;
+
+        if (comp === "low") score += 15;
+        if (comp === "high") score -= 10;
+
+        if (title.toLowerCase().includes("set") || title.toLowerCase().includes("pack")) score += 5;
+        score = clamp(score, 0, 100);
+
+        const lines = [];
+        lines.push(`• Başlık: ${title}`);
+        lines.push(`• Alış: ${toMoney(cost)} | Satış: ${toMoney(sell)} | Tahmini platform kesintisi: ${toMoney(fees)}`);
+        lines.push(`• Net kâr (adet): ${toMoney(profit)} (${margin.toFixed(1)}% marj)`);
+        lines.push(`• Aylık tahmini kâr: ${toMoney(monthlyProfit)}`);
+        lines.push(`• Genel drop skoru: ${score.toFixed(0)}/100`);
+
+        if (profit <= 0) lines.push("Yorum: Bu hâliyle ürün zararda / başa baş. Fiyat veya tedarikçiyi revize etmek gerekiyor.");
+        else if (margin < 15) lines.push("Yorum: Kâr var ama düşük. Sadece çok hızlı dönen ürünler için anlamlı olabilir.");
+        else if (margin < 30) lines.push("Yorum: Kâr marjı dropshipping için kabul edilebilir seviyede.");
+        else lines.push("Yorum: Kâr marjı gayet iyi. Rekabet uygunsa listelemeye değer.");
+
+        if (score >= 75) lines.push("Ek Not: Skor yüksek. Bu ürünü mağazada niş bir koleksiyonun parçası yapabilirsin.");
+        else if (score >= 60) lines.push("Ek Not: Skor fena değil, düşük bütçeli test listelemesi yapılabilir.");
+        else lines.push("Ek Not: Skor zayıf. Bu ürünü ana ürün yerine tamamlayıcı ürün gibi düşünmek daha mantıklı olabilir.");
+
+        out.innerHTML = `
+            <div class="analysis-box">
+                <div class="analysis-header">Drop Analyzer Sonucu</div>
+                ${lines.join("<br>")}
+            </div>
+        `;
+    }
+
+    // PRODUCT FINDER
+    function runProductFinder() {
+        const kw = (document.getElementById('pf-keyword').value || "").trim().toLowerCase();
+        const out = document.getElementById('pf-result');
+        if (!kw) {
+            alert("Kanka, en azından bir anahtar kelime / niş yazalım :)");
+            return;
+        }
+
+        const base = kw.length > 22 ? kw.slice(0, 22) : kw;
+        const ideas = [
+            base + " starter kit",
+            "premium " + base + " bundle",
+            base + " pro set",
+            "compact " + base + " organizer",
+            "multi-purpose " + base
+        ];
+
+        let html = `<div class="analysis-box">
+            <div class="analysis-header">Önerilen Ürün Fikirleri</div>
+        `;
+        ideas.forEach((i, idx) => {
+            const price = 14.99 + idx * 2.2;
+            const score = clamp(65 + idx * 4, 40, 90);
+            html += `• <strong>${i}</strong> — tahmini satış fiyatı: £${price.toFixed(2)} — drop potansiyel skoru: ${score}/100<br>`;
+        });
+        html += `<br>İpucu: UK deposu, NET fatura ve kolay kargolanabilir ürünleri filtreleyerek başlaman daha sağlıklı olur.</div>`;
+        out.innerHTML = html;
+    }
+
+    // PROFIT CALC
+    function runProfitCalc() {
+        const cost = parseFloat(document.getElementById('pc-cost').value) || 0;
+        const sell = parseFloat(document.getElementById('pc-sell').value) || 0;
+        const ship = parseFloat(document.getElementById('pc-ship').value) || 0;
+        const out = document.getElementById('pc-result');
+        if (!cost || !sell) {
+            alert("Kanka, alış ve satış fiyatını girmeden kâr hesaplayamam :)");
+            return;
+        }
+
+        const ebayFee = sell * 0.13;
+        const payFee = sell * 0.02;
+        const totalCost = cost + ship + ebayFee + payFee;
+        const profit = sell - totalCost;
+        const margin = sell > 0 ? (profit / sell) * 100 : 0;
+
+        let mood = "";
+        if (profit <= 0) mood = "Bu yapıda ürün zararda / başa baş. Fiyatı veya tedarikçiyi revize etmen gerekir.";
+        else if (margin < 10) mood = "Kâr düşük. Sadece çok hızlı satan ürünler için mantıklı olabilir.";
+        else if (margin < 25) mood = "Marj orta seviye, test için uygun.";
+        else mood = "Marj güzel, doğru niş ve rekabette bu ürün iş yapar.";
+
+        out.innerHTML = `
+            <div class="analysis-box">
+                <div class="analysis-header">Kâr Hesabı</div>
+                • Tedarikçi: ${toMoney(cost)}<br>
+                • Kargo: ${toMoney(ship)}<br>
+                • eBay + ödeme kesintisi: ${toMoney(ebayFee + payFee)}<br>
+                • Toplam maliyet: ${toMoney(totalCost)}<br>
+                • Net kâr: ${toMoney(profit)}<br>
+                • Kâr marjı: ${margin.toFixed(1)}%<br><br>
+                ${mood}
+            </div>
+        `;
+    }
+
+    // TREND
+    function runTrend() {
+        const kw = (document.getElementById('tr-keyword').value || "").trim().toLowerCase();
+        const out = document.getElementById('tr-result');
+        if (!kw) {
+            alert("Kanka, trend için bir kelime / kategori yazalım :)");
+            return;
+        }
+
+        let score = 50;
+        if (kw.includes("pet")) score += 15;
+        if (kw.includes("kitchen") || kw.includes("home")) score += 10;
+        if (kw.includes("gym") || kw.includes("fitness")) score += 10;
+        if (kw.includes("phone") || kw.includes("case")) score -= 5;
+        score = clamp(score, 10, 95);
+
+        let risk = "Orta";
+        if (score >= 70) risk = "Düşük";
+        else if (score <= 40) risk = "Yüksek";
+
+        out.innerHTML = `
+            <div class="analysis-box">
+                <div class="analysis-header">Trend Skoru</div>
+                • Kelime: ${kw}<br>
+                • Tahmini trend skoru: ${score}/100<br>
+                • Risk: ${risk}<br><br>
+                Not: Bu skor Mini AI tahminidir. İleride gerçek arama hacmi datalarıyla (Google Trends vb.) desteklenebilir.
+            </div>
+        `;
+    }
+
+    // RAKİP ANALİZİ
+    function runCompetitor() {
+        const store = (document.getElementById('cs-store').value || "").trim();
+        const out = document.getElementById('cs-result');
+        if (!store) {
+            alert("Kanka, rakip mağaza adını yazmadan analiz yapamam :)");
+            return;
+        }
+
+        let score = 65;
+        const ls = store.toLowerCase();
+        if (ls.includes("home") || ls.includes("store")) score += 5;
+        if (ls.includes("official") || ls.includes("shop")) score += 5;
+        score = clamp(score, 30, 95);
+
+        let comment = "";
+        if (score >= 80) comment = "Bu mağaza muhtemelen güçlü bir rakip; ürün, başlık ve fiyat optimizasyonu ile fark yaratman gerekir.";
+        else if (score >= 60) comment = "Orta seviye rekabet. Doğru niş seçimi ve iyi görsellerle rahatça yarışabilirsin.";
+        else comment = "Rekabet düşük gibi görünüyor, niş doğruysa güzel fırsat olabilir.";
+
+        out.innerHTML = `
+            <div class="analysis-box">
+                <div class="analysis-header">Rakip Mağaza Analizi</div>
+                • Mağaza: ${store}<br>
+                • Tahmini rekabet skoru: ${score}/100<br><br>
+                ${comment}
+            </div>
+        `;
+    }
+
+    // SEO
+    function runSEO() {
+        const title = (document.getElementById('seo-title').value || "").trim();
+        const out = document.getElementById('seo-result');
+        if (!title) {
+            alert("Kanka, önce bir başlık yazalım :)");
+            return;
+        }
+
+        const words = title.split(/\s+/).filter(Boolean);
+        let score = 60;
+        if (words.length < 5) score -= 10;
+        if (words.length > 14) score -= 5;
+        if (title.toLowerCase().includes("stainless")) score += 5;
+        if (title.toLowerCase().includes("organizer") || title.toLowerCase().includes("storage")) score += 5;
+        if (title.toLowerCase().includes("2024") || title.toLowerCase().includes("2025")) score += 5;
+        score = clamp(score, 10, 100);
+
+        const recommended = [
+            "Fast UK Shipping",
+            "2025 Trending",
+            "High Quality",
+            "Multi Purpose",
+            "Gift Idea",
+            "Home Use"
+        ];
+
+        out.innerHTML = `
+            <div class="analysis-box">
+                <div class="analysis-header">SEO Skoru</div>
+                • Başlık: ${title}<br>
+                • SEO Puanı: ${score}/100<br><br>
+                <strong>Önerilen ek kelimeler:</strong><br>
+                ${recommended.map(k => "• " + k).join("<br>")}<br><br>
+                Örnek optimize başlık:<br>
+                ${title} | Fast UK Shipping | 2025 Trending
+            </div>
+        `;
+    }
+
+    // AUTO CATEGORY
+    function runAutoCat() {
+        const title = (document.getElementById('cat-title').value || "").trim();
+        const out = document.getElementById('cat-result');
+        if (!title) {
+            alert("Kanka, başlık olmadan kategori tahmini yapamam :)");
+            return;
+        }
+
+        const t = title.toLowerCase();
+        let cat = "Genel";
+        if (t.includes("dog") || t.includes("cat") || t.includes("pet")) cat = "Pet Supplies";
+        else if (t.includes("kitchen") || t.includes("rack") || t.includes("organizer") || t.includes("pan")) cat = "Home & Kitchen";
+        else if (t.includes("car") || t.includes("auto")) cat = "Car Accessories";
+        else if (t.includes("phone") || t.includes("case") || t.includes("iphone") || t.includes("samsung")) cat = "Mobile Accessories";
+        else if (t.includes("lamp") || t.includes("light") || t.includes("led")) cat = "Lighting";
+        else if (t.includes("toy") || t.includes("kids") || t.includes("baby")) cat = "Toys & Kids";
+
+        out.innerHTML = `
+            <div class="analysis-box">
+                <div class="analysis-header">Kategori Tahmini</div>
+                • Tahmini kategori: <strong>${cat}</strong><br><br>
+                Not: Bu sadece başlık üzerinden Mini AI tahminidir. eBay kategori ağacında en yakın kategoriyi seçip son kontrolü yapman önerilir.
+            </div>
+        `;
+    }
+
+    // CİRO
+    function runRevenue() {
+        const prod = parseInt(document.getElementById('rev-prod').value) || 0;
+        const daily = parseInt(document.getElementById('rev-daily').value) || 0;
+        const price = parseFloat(document.getElementById('rev-price').value) || 0;
+        const out = document.getElementById('rev-result');
+        if (!prod || !daily || !price) {
+            alert("Kanka, ürün sayısı + günlük satış + ortalama fiyatı dolduralım :)");
+            return;
+        }
+
+        const monthlySales = daily * 30;
+        const revenue = monthlySales * price;
+
+        out.innerHTML = `
+            <div class="analysis-box">
+                <div class="analysis-header">Mağaza Ciro Tahmini</div>
+                • Ürün sayısı: ${prod}<br>
+                • Günlük satış: ${daily}<br>
+                • Aylık satış (tahmini): ${monthlySales}<br>
+                • Ortalama fiyat: £${price.toFixed(2)}<br><br>
+                <strong>Tahmini aylık ciro:</strong> £${revenue.toFixed(2)}<br><br>
+                Not: Bu tahmin, Mini AI varsayımlarına dayanır. Gerçek sonuçlar, niş, rekabet ve ürün kalitesine göre değişebilir.
+            </div>
+        `;
+    }
+
+    // AI MODE TOGGLE
+    function toggleAI() {
+        AI_MODE = !AI_MODE;
+        const el = document.getElementById('ai-status');
+        el.textContent = AI_MODE ? "Açık" : "Kapalı";
+        el.style.borderColor = AI_MODE ? "#facc15" : "rgba(148,163,184,0.6)";
+        alert("AI Mode: " + (AI_MODE ? "Açık (ileride gerçek ChatGPT API ile entegre edilebilir)" : "Kapalı (şu an local Mini AI kullanılıyor)"));
+    }
+</script>
+</body>
+</html>
