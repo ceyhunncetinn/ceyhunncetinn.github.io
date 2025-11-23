@@ -1354,5 +1354,42 @@
     }
     */
 </script>
+    function runCompetitor() {
+    const store = (document.getElementById("cs-store").value || "").trim();
+    const type = document.getElementById("cs-type").value;
+
+    if (!store) {
+        alert("Kanka rakip mağaza adını girmeden analiz yapamam :)");
+        return;
+    }
+
+    let score = 60;
+
+    if (type === "Genel Dropshipping") score += 5;
+    if (type === "Niş Mağaza") score += 15;
+    if (type === "Brand/Markalı") score += 10;
+
+    let risk = "Orta";
+    if (score > 80) risk = "Düşük";
+    if (score < 50) risk = "Yüksek";
+
+    const analysis = `
+        <div class="analysis-box">
+            <div class="analysis-header">Mağaza İncelemesi</div>
+            • Rakip: ${store}  
+            • Mağaza türü: ${type}  
+            • Tahmini rekabet skoru: ${score}/100 (${risk} risk)
+            <br><br>
+            <strong>Mini Yorum:</strong>
+            • Bu mağaza büyük ihtimalle haftada 3–5 ürün ekleyen aktif bir mağaza.  
+            • Satışları muhtemelen 15–60 adet/ay arasıdır.  
+            • Fiyat optimizasyonu zayıf ise sen rahatça geçebilirsin.  
+            • Niş mağaza türü seçtiysen yüksek trend potansiyeli var.
+        </div>
+    `;
+
+    document.getElementById("cs-result").innerHTML = analysis;
+}
+
 </body>
 </html>
