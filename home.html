@@ -14,7 +14,6 @@
         font-family: Arial, sans-serif;
     }
 
-    /* NAVBAR */
     .nav {
         width: 100%;
         padding: 15px 25px;
@@ -35,7 +34,6 @@
         font-weight: 800;
     }
 
-    /* GRID */
     .container {
         display: grid;
         gap: 20px;
@@ -43,7 +41,6 @@
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 
-    /* CARDS */
     .card {
         padding: 25px;
         background: rgba(255,255,255,0.05);
@@ -71,37 +68,34 @@
         opacity: 0.7;
         font-size: 15px;
     }
-
 </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <div class="nav">
     <h1>CEYHUN PRO ● Dashboard</h1>
 </div>
 
-<!-- MAIN PANELS -->
 <div class="container">
 
-    <div class="card" onclick="window.location.href='analyzer.html'">
+    <div class="card">
         <h2>🔍 Drop Analyzer</h2>
-        <p>Ürün analizi, satış trendleri, fiyat kıyaslaması, pazar yoğunluğu.</p>
+        <p>Ürün analizi, satış trendleri ve fiyat karşılaştırma modülünün başlangıç paneli.</p>
     </div>
 
-    <div class="card" onclick="window.location.href='finder.html'">
+    <div class="card">
         <h2>📦 Product Finder</h2>
-        <p>Trend ürün tespiti, UK/US tedarikçi eşleşmesi, satış potansiyeli.</p>
+        <p>Trend ürün tespiti, tedarikçi eşleşmesi ve kategori bazlı keşif alanı.</p>
     </div>
 
-    <div class="card" onclick="window.location.href='profit.html'">
+    <div class="card">
         <h2>💰 Profit Calculator</h2>
-        <p>Kargo, vergi, eBay kesintileri, net kar oranı otomatik hesaplama.</p>
+        <p>Kargo, eBay ücreti ve maliyetlere göre net kâr hesaplama paneli.</p>
     </div>
 
-    <div class="card" onclick="window.location.href='trends.html'">
+    <div class="card">
         <h2>📈 Trend Explorer</h2>
-        <p>Arama hacmi, yükselen ürünler, kategori bazlı trend analizi.</p>
+        <p>Arama hacmi, sezonluk trendler ve yükselen ürün fikirleri için alan.</p>
     </div>
 
 </div>
