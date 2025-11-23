@@ -225,6 +225,40 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+            <section class="panel" id="panel-competitor">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <div class="card-title">Rakip Mağaza Analizi</div>
+                <div class="card-sub">Herhangi bir eBay mağazasını gir → AI benzeri analiz</div>
+            </div>
+            <span class="badge-soft blue">Mini AI</span>
+        </div>
+
+        <div class="form-row">
+            <div>
+                <label>Rakip eBay Mağazası</label>
+                <input id="cs-store" placeholder="Örn: best_home_store_uk">
+            </div>
+            <div>
+                <label>Mağaza Türü</label>
+                <select id="cs-type">
+                    <option>Genel Dropshipping</option>
+                    <option>Brand/Markalı</option>
+                    <option>Niş Mağaza</option>
+                    <option>Karışık Ürünler</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="runCompetitor()">
+            🧠 Rakip Analizini Çalıştır
+        </button>
+
+        <div id="cs-result" style="margin-top:10px;"></div>
+    </div>
+</section>
+
         /* Cards + layout */
         .grid-2 {
             display: grid;
