@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceyhun PRO • Home</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #0d1117;
+        color: white;
+        font-family: Arial, sans-serif;
+    }
+
+    /* NAVBAR */
+    .nav {
+        width: 100%;
+        padding: 15px 25px;
+        background: rgba(255,255,255,0.05);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        position: sticky;
+        top: 0;
+    }
+
+    .nav h1 {
+        margin: 0;
+        font-size: 22px;
+        letter-spacing: 1px;
+        background: linear-gradient(90deg, #ff4dd2, #ff008c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 800;
+    }
+
+    /* GRID */
+    .container {
+        display: grid;
+        gap: 20px;
+        padding: 25px;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    /* CARDS */
+    .card {
+        padding: 25px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 16px;
+        border: 1px solid rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+        transition: 0.25s ease;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(255,0,140,0.4);
+        border-color: rgba(255,0,140,0.5);
+    }
+
+    .card h2 {
+        margin: 0 0 12px;
+        font-size: 20px;
+        color: #ff4dd2;
+    }
+
+    .card p {
+        opacity: 0.7;
+        font-size: 15px;
+    }
+
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="nav">
+    <h1>CEYHUN PRO ● Dashboard</h1>
+</div>
+
+<!-- MAIN PANELS -->
+<div class="container">
+
+    <div class="card" onclick="window.location.href='analyzer.html'">
+        <h2>🔍 Drop Analyzer</h2>
+        <p>Ürün analizi, satış trendleri, fiyat kıyaslaması, pazar yoğunluğu.</p>
+    </div>
+
+    <div class="card" onclick="window.location.href='finder.html'">
+        <h2>📦 Product Finder</h2>
+        <p>Trend ürün tespiti, UK/US tedarikçi eşleşmesi, satış potansiyeli.</p>
+    </div>
+
+    <div class="card" onclick="window.location.href='profit.html'">
+        <h2>💰 Profit Calculator</h2>
+        <p>Kargo, vergi, eBay kesintileri, net kar oranı otomatik hesaplama.</p>
+    </div>
+
+    <div class="card" onclick="window.location.href='trends.html'">
+        <h2>📈 Trend Explorer</h2>
+        <p>Arama hacmi, yükselen ürünler, kategori bazlı trend analizi.</p>
+    </div>
+
+</div>
+
+</body>
+</html>
